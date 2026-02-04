@@ -309,3 +309,58 @@
   justify-content: center;
   align-items: center;
 }
+
+
+
+
+
+
+/* Contact button */
+.contact-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.contact-btn:hover {
+  text-decoration: underline;
+}
+
+/* Popup background */
+.contact-popup {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup box */
+.popup-box {
+  background: white;
+  padding: 20px 25px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* Icons */
+.popup-box a {
+  font-size: 32px;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+/* Close button */
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  float: right;
+}
+
+
