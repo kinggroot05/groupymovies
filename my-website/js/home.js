@@ -129,19 +129,21 @@ const popup = document.getElementById("contactPopup");
 const closeBtn = document.getElementById("closePopup");
 
 contactBtn.addEventListener("click", () => {
-  popup.style.display = "flex";
+  popup.classList.add("active");
 });
 
 closeBtn.addEventListener("click", () => {
-  popup.style.display = "none";
+  popup.classList.remove("active");
 });
 
 // Close popup when clicking outside the box
 popup.addEventListener("click", (e) => {
   if (e.target === popup) {
-    popup.style.display = "none";
+    popup.classList.remove("active");
   }
 });
 
+
     init();
+
 
