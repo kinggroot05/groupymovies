@@ -121,4 +121,27 @@ const API_KEY = 'b3f1d49dab58ab74415a42a1a9f4dbef';
     }
 
 
+
+
+
+const contactBtn = document.getElementById("contactBtn");
+const popup = document.getElementById("contactPopup");
+const closeBtn = document.getElementById("closePopup");
+
+contactBtn.addEventListener("click", () => {
+  popup.style.display = "flex";
+});
+
+closeBtn.addEventListener("click", () => {
+  popup.style.display = "none";
+});
+
+// Close popup when clicking outside the box
+popup.addEventListener("click", (e) => {
+  if (e.target === popup) {
+    popup.style.display = "none";
+  }
+});
+
     init();
+
