@@ -24,10 +24,8 @@
 
     .banner h1 {
 
-          background-color: transparent;
-
-   /*  background: rgba(0,0,0,0.7);
-      padding: 10px; */
+background: rgba(0,0,0,0.7);
+      padding: 10px;
     }
 
     .row {
@@ -391,4 +389,5 @@
   cursor: pointer;
   float: right;
 }
+
 
