@@ -23,8 +23,11 @@
     }
 
     .banner h1 {
-      background: rgba(0,0,0,0.7);
-      padding: 10px;
+
+          background-color: transparent;
+
+   /*  background: rgba(0,0,0,0.7);
+      padding: 10px; */
     }
 
     .row {
@@ -388,3 +391,4 @@
   cursor: pointer;
   float: right;
 }
+
