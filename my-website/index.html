@@ -88,6 +88,10 @@
   <!-- REGISTER -->
   <div id="registerPanel" class="hidden">
     <h2>Create Account</h2>
+    <label>First Name</label>
+    <input type="text" id="regFirstName" placeholder="First Name" />
+    <label>Last Name</label>
+    <input type="text" id="regLastName" placeholder="Last Name" />
     <label>Email</label>
     <input type="email" id="regEmail" />
     <label>Password</label>
@@ -104,7 +108,8 @@
     getAuth, 
     createUserWithEmailAndPassword, 
     signInWithEmailAndPassword,
-    onAuthStateChanged
+    onAuthStateChanged,
+    updateProfile
   } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
   const firebaseConfig = {
@@ -141,13 +146,29 @@
 
   // REGISTER
   document.getElementById("registerBtn").addEventListener("click", ()=>{
-    const email = document.getElementById("regEmail").value;
-    const password = document.getElementById("regPassword").value;
+    const firstName = document.getElementById("regFirstName").value.trim();
+    const lastName = document.getElementById("regLastName").value.trim();
+    const email = document.getElementById("regEmail").value.trim();
+    const password = document.getElementById("regPassword").value.trim();
     const status = document.getElementById("regStatus");
 
+    if(!firstName || !lastName){
+      status.textContent = "Please enter your first and last name.";
+      return;
+    }
+
     createUserWithEmailAndPassword(auth, email, password)
-      .then(()=>{ status.textContent = "Account created!"; })
-      .catch(e=>{ status.textContent = e.message; });
+      .then(userCredential=>{
+        // Update displayName with First + Last name
+        updateProfile(userCredential.user, {
+          displayName: firstName + " " + lastName
+        }).then(()=>{
+          status.textContent = "Account created successfully!";
+        });
+      })
+      .catch(e=>{
+        status.textContent = e.message;
+      });
   });
 
   // LOGIN
