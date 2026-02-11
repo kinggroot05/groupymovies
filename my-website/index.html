@@ -54,73 +54,68 @@
 </div>
 
 <script>
-// ---------- STORAGE ----------
-function getUsers(){
-  try{ return JSON.parse(localStorage.getItem('users')||'{}'); }
-  catch(e){ return {}; }
-}
-function saveUsers(u){ localStorage.setItem('users',JSON.stringify(u)); }
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { 
+    getAuth, 
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-// ---------- TABS ----------
-const tabLogin=document.getElementById('tabLogin');
-const tabRegister=document.getElementById('tabRegister');
-const loginPanel=document.getElementById('loginPanel');
-const registerPanel=document.getElementById('registerPanel');
+  const firebaseConfig = {
+    apiKey: "AIzaSyCwhZf8p7oL-o5A25IABMr1w9FYSoUTPZg",
+    authDomain: "groupymovie.firebaseapp.com",
+    projectId: "groupymovie",
+    storageBucket: "groupymovie.firebasestorage.app",
+    messagingSenderId: "391687787452",
+    appId: "1:391687787452:web:025fe4654afeb0f6eed1b9"
+  };
 
-tabLogin.onclick=()=>{
-  tabLogin.classList.add('active');
-  tabRegister.classList.remove('active');
-  loginPanel.classList.remove('hidden');
-  registerPanel.classList.add('hidden');
-};
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
-tabRegister.onclick=()=>{
-  tabRegister.classList.add('active');
-  tabLogin.classList.remove('active');
-  registerPanel.classList.remove('hidden');
-  loginPanel.classList.add('hidden');
-};
+  // REGISTER
+  document.getElementById("createBtn").addEventListener("click", () => {
+    const email = document.getElementById("regUser").value;
+    const password = document.getElementById("regPass").value;
+    const status = document.getElementById("regStatus");
 
-// ---------- CREATE ACCOUNT ----------
-document.getElementById('createBtn').addEventListener('click',()=>{
-  const user=document.getElementById('regUser').value.trim();
-  const pass=document.getElementById('regPass').value.trim();
-  const status=document.getElementById('regStatus');
-  const users=getUsers();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        status.textContent = "Account created!";
+      })
+      .catch(error => {
+        status.textContent = error.message;
+      });
+  });
 
-  if(!user||!pass){ status.textContent='Fill in all fields.'; return; }
-  if(users[user]){ status.textContent='Username already exists.'; return; }
+  // LOGIN
+  document.getElementById("loginBtn").addEventListener("click", () => {
+    const email = document.getElementById("loginUser").value;
+    const password = document.getElementById("loginPass").value;
+    const status = document.getElementById("loginStatus");
 
-  users[user]={password:pass};
-  saveUsers(users);
-  status.textContent='Account created! You may now login.';
-  document.getElementById('regUser').value='';
-  document.getElementById('regPass').value='';
-});
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        window.location.href = "mainpage.html";
+      })
+      .catch(error => {
+        status.textContent = "Invalid login.";
+      });
+  });
 
-// ---------- LOGIN ----------
-document.getElementById('loginBtn').addEventListener('click',()=>{
-  const user=document.getElementById('loginUser').value.trim();
-  const pass=document.getElementById('loginPass').value.trim();
-  const status=document.getElementById('loginStatus');
-  const users=getUsers();
-
-  if(!users[user]||users[user].password!==pass){
-    status.textContent='Invalid username or password.';
-    return;
-  }
-
-  localStorage.setItem('currentUser',user);
-  status.textContent='Login success...';
-  setTimeout(()=>window.location.href='mainpage.html',600);
-});
-
-// auto redirect if already logged in
-if(localStorage.getItem('currentUser')){
-  window.location.href='mainpage.html';
-}
+  // Auto redirect if logged in
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      window.location.href = "mainpage.html";
+    }
+  });
 </script>
 
 </body>
 
 </html>
+
