@@ -100,7 +100,7 @@ onAuthStateChanged(auth, (user) => {
       ? `Welcome, ${firstName}`
       : `Welcome, ${user.email}`;
   } else {
-    welcome.textContent = "Welcome!";
+    window.location.replace("index.html");
   }
 });
 
