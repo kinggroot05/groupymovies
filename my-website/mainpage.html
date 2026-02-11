@@ -1,25 +1,4 @@
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCwhZf8p7oL-o5A25IABMr1w9FYSoUTPZg",
-    authDomain: "groupymovie.firebaseapp.com",
-    projectId: "groupymovie",
-    storageBucket: "groupymovie.firebasestorage.app",
-    messagingSenderId: "391687787452",
-    appId: "1:391687787452:web:025fe4654afeb0f6eed1b9"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth();
-
-onAuthStateChanged(auth, (user) => {
-  if (!user) {
-    window.location.replace("index.html");
-  }
-});
-</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -197,6 +176,27 @@ onAuthStateChanged(auth, (user) => {
   });
 })();
 </script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
 
+  const firebaseConfig = {
+    apiKey: "AIzaSyCwhZf8p7oL-o5A25IABMr1w9FYSoUTPZg",
+    authDomain: "groupymovie.firebaseapp.com",
+    projectId: "groupymovie",
+    storageBucket: "groupymovie.firebasestorage.app",
+    messagingSenderId: "391687787452",
+    appId: "1:391687787452:web:025fe4654afeb0f6eed1b9"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth();
+
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.replace("index.html");
+  }
+});
+</script>
 </body>
 </html>
