@@ -159,15 +159,20 @@ document.getElementById("registerBtn").addEventListener("click", async () => {
 
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
 
-    // ✅ Properly set displayName in Firebase v10
-    await updateProfile(user, { displayName: `${firstName} ${lastName}` });
+    // 🔥 IMPORTANT: Use updateProfile from import (NOT user.updateProfile)
+    await updateProfile(userCredential.user, {
+      displayName: `${firstName} ${lastName}`
+    });
+
+    // 🔥 Force refresh before redirect
+    await userCredential.user.reload();
 
     status.textContent = `Account created! Welcome, ${firstName}`;
 
-    // Optional: immediately sign in the user
-    window.location.href = "mainpage.html";
+    setTimeout(() => {
+      window.location.href = "mainpage.html";
+    }, 1000);
 
   } catch (error) {
     status.textContent = error.message;
@@ -194,6 +199,7 @@ document.getElementById("registerBtn").addEventListener("click", async () => {
 
 </body>
 </html>
+
 
 
 
