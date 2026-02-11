@@ -1,69 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Free Movies For You</title>
-<link rel="stylesheet" href="css/home.css">
-<link rel="preload" href="css/home.css" as="style">
-<link rel="preload" href="js/home.js" as="script">
-<link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<script defer src="js/home.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Free Movies For You</title>
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="preload" href="css/home.css" as="style">
+  <link rel="preload" href="js/home.js" as="script">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script defer src="js/home.js"></script>
 
-<style>
-  body { margin:0; font-family:system-ui,Segoe UI,Arial; background:linear-gradient(135deg,#0b1024,#111827); color:#e5e7eb; min-height:100vh; visibility:hidden; }
-  body.loaded{ visibility:visible; transition:visibility 0.3s ease-in; }
+  <style>
+    /* Login/Register Card */
+    :root{--bg:#0f172a;--card:#111827;--accent:#22c55e;--accent2:#60a5fa;--text:#e5e7eb;--muted:#9ca3af}
+    *{box-sizing:border-box;font-family:system-ui,Segoe UI,Arial}
+    body{margin:0;background:linear-gradient(135deg,#0b1024,#111827);color:var(--text);min-height:100vh}
+    .card{width:360px;background:#111827;padding:22px;border-radius:16px;box-shadow:0 10px 35px rgba(0,0,0,.4);margin:30px auto}
+    h2{margin:0 0 10px}
+    label{display:block;margin-top:12px;font-size:.9rem}
+    input{width:100%;padding:10px;border-radius:10px;border:1px solid #374151;background:#020617;color:#e5e7eb;margin-top:6px}
+    button{width:100%;padding:10px;border:none;border-radius:12px;color:white;cursor:pointer;margin-top:14px}
+    .primary{background:var(--accent)}
+    .secondary{background:var(--accent2)}
+    .tabs{display:flex;gap:6px;margin-bottom:12px}
+    .tab{flex:1;text-align:center;padding:8px;border-radius:10px;background:#020617;cursor:pointer}
+    .active{background:#60a5fa}
+    .hidden{display:none}
+    .status{margin-top:10px;font-weight:600;color:#9ca3af}
 
-  /* Login/Register Card Centered */
-  #loginRegisterCard{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1000;}
-  .card{width:360px;max-width:90%;background:#111827;padding:22px;border-radius:16px;box-shadow:0 10px 35px rgba(0,0,0,.4);}
-  h2{margin:0 0 10px;}
-  label{display:block;margin-top:12px;font-size:.9rem;}
-  input{width:100%;padding:10px;border-radius:10px;border:1px solid #374151;background:#020617;color:#e5e7eb;margin-top:6px;}
-  button{width:100%;padding:10px;border:none;border-radius:12px;color:white;cursor:pointer;margin-top:14px;}
-  .primary{background:#22c55e;}
-  .secondary{background:#60a5fa;}
-  .tabs{display:flex;gap:6px;margin-bottom:12px;}
-  .tab{flex:1;text-align:center;padding:8px;border-radius:10px;background:#020617;cursor:pointer;}
-  .active{background:#60a5fa;}
-  .hidden{display:none;}
-  .status{margin-top:10px;font-weight:600;color:#9ca3af;}
-
-  /* Main content layout */
-  #mainContent{display:none; flex-direction:column;}
-  .navbar{display:flex; justify-content: space-between; padding:10px 20px; background:#111827;}
-  .nav-links{display:flex; align-items:center; gap:10px;}
-  .banner{height:300px; text-align:center; display:flex; align-items:center; justify-content:center;}
-  .row{padding:15px 20px;}
-  .list{display:flex; flex-wrap: wrap; gap:10px;}
-  .card-item{width:150px; cursor:pointer; text-align:center;}
-  .card-item img{width:100%; border-radius:10px;}
-
-  /* Modal player */
-  .modal{display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); align-items:center; justify-content:center; z-index:999;}
-  .modal-content{background:#111827;color:#fff; padding:20px; border-radius:15px; max-width:700px; width:90%;}
-  .modal-content img{width:100%; max-height:300px; object-fit:cover; border-radius:10px;}
-  .modal-text{margin-top:10px;}
-  .close{cursor:pointer; font-size:24px; font-weight:bold; position:absolute; top:10px; right:20px;}
-  .server-selector{margin-top:10px;}
-  iframe{margin-top:10px; width:100%; height:315px; border:none; border-radius:10px;}
-  
-  /* Account modal */
-  .account-modal{position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; z-index:9999;}
-  .account-card{background:#111827;color:#fff;padding:25px;border-radius:15px;width:320px;box-shadow:0 10px 30px rgba(0,0,0,.4);}
-  .account-card input{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #374151;background:#020617;color:#fff;}
-  .account-card button{padding:10px;border:none;border-radius:10px;margin-top:8px;cursor:pointer;width:100%;}
-  .account-card .update{background:#3b82f6;color:#fff;}
-  .account-card .delete{background:#ef4444;color:#fff;}
-  .account-card .logout{background:#22c55e;color:#fff;}
-  .account-card .status{margin-top:10px;font-weight:bold;}
-</style>
+    /* Account modal (dashboard) */
+    .account-modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:9999}
+    .account-card{background:#111827;color:#fff;padding:25px;border-radius:15px;width:320px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+    .account-card input{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #374151;background:#020617;color:#fff}
+    .account-card button{padding:10px;border:none;border-radius:10px;margin-top:8px;cursor:pointer;width:100%}
+    .account-card .update{background:#3b82f6;color:#fff}
+    .account-card .delete{background:#ef4444;color:#fff}
+    .account-card .logout{background:#22c55e;color:#fff}
+    .account-card .status{margin-top:10px;font-weight:bold}
+  </style>
 </head>
-
 <body>
-<!-- Login/Register Card -->
-<div id="loginRegisterCard" class="card">
+
+<!-- LOGIN / REGISTER CARD -->
+<div class="card" id="authCard">
   <div class="tabs">
     <div class="tab active" id="tabLogin">Login</div>
     <div class="tab" id="tabRegister">Create</div>
@@ -92,8 +72,8 @@
   </div>
 </div>
 
-<!-- Main Content -->
-<div id="mainContent">
+<!-- MAIN CONTENT -->
+<div id="mainContent" class="hidden">
   <div class="navbar">
     <div class="nav-links">
       <a href="#">Home</a>
@@ -103,7 +83,7 @@
   </div>
 
   <div class="banner" id="banner">
-    <h1 id="banner-title">Welcome to Free Movies For You</h1>
+    <h1 id="banner-title"></h1>
   </div>
 
   <div class="row">
@@ -120,15 +100,19 @@
     <h2>Trending Anime</h2>
     <div class="list" id="anime-list"></div>
   </div>
-</div>
 
-<!-- Modal Player -->
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <img id="modal-image" src="" alt="">
-    <div class="modal-text">
-      <h2 id="modal-title"></h2>
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()" style="color: red;">&times;</span>
+      <div class="modal-body">
+        <img id="modal-image" src="" alt="" />
+        <div class="modal-text">
+          <h2 id="modal-title"></h2>
+          <div class="stars" id="modal-rating"></div>
+          <p id="modal-description"></p>
+        </div>
+      </div>
+      
       <div class="server-selector">
         <label for="server">Change Server:</label>
         <select id="server" onchange="changeServer()">
@@ -137,154 +121,167 @@
           <option value="player.videasy.net">Monica</option>
         </select>
       </div>
-      <iframe id="modal-video" allowfullscreen></iframe>
+      <iframe id="modal-video" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <div class="search-modal" id="search-modal">
+    <span class="close" onclick="closeSearchModal()" style="color: red;">&times;</span>
+    <input type="text" id="search-input" placeholder="Search for a movie or show..." oninput="searchTMDB()" />
+    <div class="results" id="search-results"></div>
+  </div>
+
+  <!-- Account Modal -->
+  <div id="accountModal" class="account-modal">
+    <div class="account-card">
+      <h2 id="welcome"></h2>
+      <h3>Change Password</h3>
+      <input type="password" id="newPass" placeholder="New Password">
+      <button class="update" id="updateBtn">Update Account</button>
+      <h3>Delete Account</h3>
+      <button class="delete" id="deleteBtn">Delete Account</button>
+      <hr>
+      <button class="logout" id="logoutBtn">Logout</button>
+      <div class="status" id="status"></div>
     </div>
   </div>
 </div>
 
-<!-- Account Modal -->
-<div id="accountModal" class="account-modal">
-  <div class="account-card">
-    <h2 id="welcome"></h2>
-    <h3>Change Password</h3>
-    <input type="password" id="newPass" placeholder="New Password">
-    <button class="update" id="updateBtn">Update Account</button>
-
-    <h3>Delete Account</h3>
-    <button class="delete" id="deleteBtn">Delete Account</button>
-
-    <hr>
-    <button class="logout" id="logoutBtn">Logout</button>
-    <div class="status" id="status"></div>
-  </div>
-</div>
-
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updatePassword, deleteUser } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  // =========================
+  // FIREBASE AUTH SETUP
+  // =========================
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { 
+    getAuth, 
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut,
+    updatePassword,
+    deleteUser 
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCwhZf8p7oL-o5A25IABMr1w9FYSoUTPZg",
-  authDomain: "groupymovie.firebaseapp.com",
-  projectId: "groupymovie",
-  storageBucket: "groupymovie.firebasestorage.app",
-  messagingSenderId: "391687787452",
-  appId: "1:391687787452:web:025fe4654afeb0f6eed1b9"
-};
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+  const firebaseConfig = {
+    apiKey: "AIzaSyCwhZf8p7oL-o5A25IABMr1w9FYSoUTPZg",
+    authDomain: "groupymovie.firebaseapp.com",
+    projectId: "groupymovie",
+    storageBucket: "groupymovie.firebasestorage.app",
+    messagingSenderId: "391687787452",
+    appId: "1:391687787452:web:025fe4654afeb0f6eed1b9"
+  };
 
-// Elements
-const loginCard = document.getElementById('loginRegisterCard');
-const mainContent = document.getElementById('mainContent');
-const modal = document.getElementById('modal');
-const modalImage = document.getElementById('modal-image');
-const modalTitle = document.getElementById('modal-title');
-const modalVideo = document.getElementById('modal-video');
-const serverSelect = document.getElementById('server');
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
-const tabLogin = document.getElementById('tabLogin');
-const tabRegister = document.getElementById('tabRegister');
-const loginPanel = document.getElementById('loginPanel');
-const registerPanel = document.getElementById('registerPanel');
+  const authCard = document.getElementById('authCard');
+  const mainContent = document.getElementById('mainContent');
+  const modal = document.getElementById('accountModal');
+  const status = document.getElementById('status');
+  const welcome = document.getElementById('welcome');
 
-const welcome = document.getElementById('welcome');
-const status = document.getElementById('status');
+  // =========================
+  // TAB SWITCHING
+  // =========================
+  const tabLogin = document.getElementById('tabLogin');
+  const tabRegister = document.getElementById('tabRegister');
+  const loginPanel = document.getElementById('loginPanel');
+  const registerPanel = document.getElementById('registerPanel');
 
-// Tab switching
-tabLogin.addEventListener('click', () => { tabLogin.classList.add('active'); tabRegister.classList.remove('active'); loginPanel.classList.remove('hidden'); registerPanel.classList.add('hidden'); });
-tabRegister.addEventListener('click', () => { tabRegister.classList.add('active'); tabLogin.classList.remove('active'); registerPanel.classList.remove('hidden'); loginPanel.classList.add('hidden'); });
-
-// Register
-document.getElementById("createBtn").addEventListener("click", () => {
-  const email = document.getElementById("regUser").value;
-  const password = document.getElementById("regPass").value;
-  const statusReg = document.getElementById("regStatus");
-  createUserWithEmailAndPassword(auth, email, password).then(()=>{ statusReg.textContent="Account created!"; }).catch(err=>{ statusReg.textContent=err.message; });
-});
-
-// Login
-document.getElementById("loginBtn").addEventListener("click", () => {
-  const email = document.getElementById("loginUser").value;
-  const password = document.getElementById("loginPass").value;
-  const statusLogin = document.getElementById("loginStatus");
-  signInWithEmailAndPassword(auth, email, password).catch(err=>{ statusLogin.textContent=err.message; });
-});
-
-// Auth state
-onAuthStateChanged(auth, user => {
-  if(user){
-    loginCard.style.display="none";
-    mainContent.style.display="block";
-    welcome.textContent = "Welcome, " + user.email;
-    document.body.classList.add('loaded');
-    loadTMDB();
-  } else {
-    loginCard.style.display="block";
-    mainContent.style.display="none";
-    document.body.classList.add('loaded');
-  }
-});
-
-// Account Modal
-document.getElementById('accountBtn').addEventListener('click', ()=>{ document.getElementById('accountModal').style.display="flex"; });
-document.getElementById('accountModal').addEventListener('click', e=>{ if(e.target===document.getElementById('accountModal')) document.getElementById('accountModal').style.display='none'; });
-document.getElementById('logoutBtn').addEventListener('click', async ()=>{ await signOut(auth); });
-document.getElementById('updateBtn').addEventListener('click', async ()=>{
-  const user = auth.currentUser;
-  const newPass = document.getElementById('newPass').value.trim();
-  if(!newPass){ status.textContent="Enter a new password."; return; }
-  try{ await updatePassword(user,newPass); status.textContent="Password updated!"; document.getElementById('newPass').value=""; }
-  catch(err){ status.textContent=err.message; }
-});
-document.getElementById('deleteBtn').addEventListener('click', async ()=>{
-  const user = auth.currentUser;
-  if(!confirm("Are you sure you want to delete your account?")) return;
-  try{ await deleteUser(user); alert("Account deleted."); } catch(err){ status.textContent=err.message; }
-});
-
-// TMDB API
-const TMDB_API_KEY = "b3f1d49dab58ab74415a42a1a9f4dbef";
-
-async function loadTMDB(){
-  try{
-    const movies = await fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${TMDB_API_KEY}`).then(r=>r.json());
-    const tvs = await fetch(`https://api.themoviedb.org/3/trending/tv/week?api_key=${TMDB_API_KEY}`).then(r=>r.json());
-    const animes = await fetch(`https://api.themoviedb.org/3/trending/all/week?api_key=${TMDB_API_KEY}`).then(r=>r.json());
-
-    renderList('movies-list', movies.results);
-    renderList('tvshows-list', tvs.results);
-    renderList('anime-list', animes.results);
-  }catch(e){ console.error(e); }
-}
-
-function renderList(containerId, items){
-  const container = document.getElementById(containerId);
-  container.innerHTML='';
-  items.forEach(item=>{
-    const title = item.title || item.name;
-    const img = item.poster_path ? `https://image.tmdb.org/t/p/w200${item.poster_path}` : '';
-    const card = document.createElement('div');
-    card.classList.add('card-item');
-    card.innerHTML=`<img src="${img}" alt="${title}"/><p>${title}</p>`;
-    card.addEventListener('click', ()=>{
-      modalImage.src=img;
-      modalTitle.textContent=title;
-      modalVideo.src = `https://${serverSelect.value}/embed/${item.id}`; // placeholder embed URL
-      modal.style.display='flex';
-    });
-    container.appendChild(card);
+  tabLogin.addEventListener('click', () => {
+    tabLogin.classList.add('active');
+    tabRegister.classList.remove('active');
+    loginPanel.classList.remove('hidden');
+    registerPanel.classList.add('hidden');
   });
-}
 
-// Modal close
-function closeModal(){ modal.style.display='none'; }
-function changeServer(){
-  const id = modalTitle.textContent; // placeholder, in real usage map to TMDB ID
-  modalVideo.src = `https://${serverSelect.value}/embed/${id}`;
-}
+  tabRegister.addEventListener('click', () => {
+    tabRegister.classList.add('active');
+    tabLogin.classList.remove('active');
+    registerPanel.classList.remove('hidden');
+    loginPanel.classList.add('hidden');
+  });
+
+  // =========================
+  // REGISTER
+  // =========================
+  document.getElementById("createBtn").addEventListener("click", () => {
+    const email = document.getElementById("regUser").value;
+    const password = document.getElementById("regPass").value;
+    const regStatus = document.getElementById("regStatus");
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        regStatus.textContent = "Account created!";
+      })
+      .catch(error => {
+        regStatus.textContent = error.message;
+      });
+  });
+
+  // =========================
+  // LOGIN
+  // =========================
+  document.getElementById("loginBtn").addEventListener("click", () => {
+    const email = document.getElementById("loginUser").value;
+    const password = document.getElementById("loginPass").value;
+    const loginStatus = document.getElementById("loginStatus");
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        authCard.classList.add('hidden');
+        mainContent.classList.remove('hidden');
+      })
+      .catch(error => {
+        loginStatus.textContent = error.message;
+      });
+  });
+
+  // =========================
+  // AUTO REDIRECT / SHOW CONTENT
+  // =========================
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      authCard.classList.add('hidden');
+      mainContent.classList.remove('hidden');
+      welcome.textContent = "Welcome, " + user.email;
+    } else {
+      authCard.classList.remove('hidden');
+      mainContent.classList.add('hidden');
+    }
+  });
+
+  // =========================
+  // ACCOUNT MODAL ACTIONS
+  // =========================
+  document.getElementById('accountBtn').addEventListener('click', () => {
+    modal.style.display = 'flex';
+  });
+
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    await signOut(auth);
+    modal.style.display = 'none';
+    welcome.textContent = '';
+    document.getElementById('newPass').value = '';
+    status.textContent = '';
+  });
+
+  document.getElementById('updateBtn').addEventListener('click', async () => {
+    const user = auth.currentUser;
+    const newPass = document.getElementById('newPass').value.trim();
+    if (!newPass) { status.textContent = "Enter a new password."; return; }
+    try { await updatePassword(user, newPass); status.textContent = "Password updated!"; document.getElementById('newPass').value = ''; }
+    catch(e){ status.textContent = e.message; }
+  });
+
+  document.getElementById('deleteBtn').addEventListener('click', async () => {
+    const user = auth.currentUser;
+    if (!confirm("Are you sure you want to delete your account?")) return;
+    try { await deleteUser(user); alert("Account deleted."); modal.style.display = 'none'; authCard.classList.remove('hidden'); mainContent.classList.add('hidden'); } 
+    catch(e){ status.textContent = e.message; }
+  });
 
 </script>
+
 </body>
 </html>
-
