@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Free Movies For You </title>
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="preload" href="css/home.css" as="style">
+  <link rel="preload" href="js/home.js" as="script">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script defer src="js/home.js"></script>
+
+  <style>
+    /* Account modal (dashboard) */
+    .account-modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:9999}
+    .account-card{background:#111827;color:#fff;padding:25px;border-radius:15px;width:320px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+    .account-card input{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #374151;background:#020617;color:#fff}
+    .account-card button{padding:10px;border:none;border-radius:10px;margin-top:8px;cursor:pointer;width:100%}
+    .account-card .update{background:#3b82f6;color:#fff}
+    .account-card .delete{background:#ef4444;color:#fff}
+    .account-card .logout{background:#22c55e;color:#fff}
+    .account-card .status{margin-top:10px;font-weight:bold}
+  </style>
+
+  <script type="text/javascript" data-cfasync="false">
+/*<![CDATA[/* */
+(function(){var f=window,b="c21091ff1831bb6fdb852783a76519c6",d=[["siteId",503*362-898+332+170+5094097],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],t=["d3d3LmNkbjRhZHMuY29tL0ZjL1lQL2Rsb3phZC5taW4uanM=","ZDNnNW92Zm5nanc5YncuY2xvdWRmcm9udC5uZXQvYWZsb2F0aW5nLmpz"],p=-1,c,h,a=function(){clearTimeout(h);p++;if(t[p]&&!(1796668415000<(new Date).getTime()&&1<p)){c=f.document.createElement("script");c.type="text/javascript";c.async=!0;var j=f.document.getElementsByTagName("script")[0];c.src="https://"+atob(t[p]);c.crossOrigin="anonymous";c.onerror=a;c.onload=function(){clearTimeout(h);f[b.slice(0,16)+b.slice(0,16)]||a()};h=setTimeout(a,5E3);j.parentNode.insertBefore(c,j)}};if(!f[b]){try{Object.freeze(f[b]=d)}catch(e){}a()}})();
+/*]]>/* */
+</script>
+
+</head>
+
+<body>
+  <div class="navbar">
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <input type="text" class="search-bar" placeholder="Search..." onfocus="openSearchModal()" />
+      <button id="accountBtn" class="contact-btn">Account</button>
+    </div>
+  </div>
+
+  <div class="banner" id="banner">
+    <h1 id="banner-title"></h1>
+  </div>
+
+  <div class="row">
+    <h2>Trending Movies</h2>
+    <div class="list" id="movies-list"></div>
+  </div>
+
+  <div class="row">
+    <h2>Trending TV Shows</h2>
+    <div class="list" id="tvshows-list"></div>
+  </div>
+
+  <div class="row">
+    <h2>Trending Anime</h2>
+    <div class="list" id="anime-list"></div>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()" style="color: red;">&times;</span>
+      <div class="modal-body">
+  <img id="modal-image" src="" alt="" />
+  <div class="modal-text">
+    <h2 id="modal-title"></h2>
+    <div class="stars" id="modal-rating"></div>
+    <p id="modal-description"></p>
+  </div>
+</div>
+      
+      <div class="server-selector">
+        <label for="server">Change Server:</label>
+        <select id="server" onchange="changeServer()">
+          <option value="vidsrc.cc">Daphne</option>
+          <option value="vidsrc.me">Babelyn</option>
+          <option value="player.videasy.net">Monica</option>
+        </select>
+      </div>
+      <iframe id="modal-video" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <div class="search-modal" id="search-modal">
+    <span class="close" onclick="closeSearchModal()" style="color: red;">&times;</span>
+    <input type="text" id="search-input" placeholder="Search for a movie or show..." oninput="searchTMDB()" />
+    <div class="results" id="search-results"></div>
+  </div>
+
+<footer class="footer">
+  <div class="footer-content">
+    <p>&copy; 2026 Group 5's Website. All rights reserved.</p>
+
+    <div class="footer-links">
+      <button id="contactBtn" class="contact-btn">Contact Us</button>
+    </div>
+  </div>
+</footer>
+
+<!-- Contact Popup -->
+<div id="contactPopup" class="contact-popup">
+  <div class="popup-box">
+    <button id="closePopup" class="close-btn">✖</button>
+
+    <a href="https://facebook.com" target="_blank" title="Facebook">📘</a>
+    <a href="https://instagram.com" target="_blank" title="Instagram">📸</a>
+    <a href="https://discord.com" target="_blank" title="Discord">🎮</a>
+  </div>
+</div>
+
+<!-- Account Dashboard Modal -->
+<div id="accountModal" class="account-modal">
+  <div class="account-card">
+    <h2 id="welcome"></h2>
+
+    <h3>Change Password</h3>
+    <input type="password" id="newPass" placeholder="New Password">
+    <button class="update" id="updateBtn">Update Account</button>
+
+    <h3>Delete Account</h3>
+    <button class="delete" id="deleteBtn">Delete Account</button>
+
+    <hr>
+    <button class="logout" id="logoutBtn">Logout</button>
+
+    <div class="status" id="status"></div>
+  </div>
+</div>
+
+<!-- Link JS file -->
+<script src="js/home.js"></script>
+
+<script>
+// ---- PROTECT PAGE ----
+(function(){
+  const user = localStorage.getItem('currentUser');
+  if(!user){ window.location.href='index.html'; return; }
+
+  const users = JSON.parse(localStorage.getItem('users')||'{}');
+  const modal = document.getElementById('accountModal');
+  const status = document.getElementById('status');
+  const welcome = document.getElementById('welcome');
+  welcome.textContent = 'Welcome, ' + user;
+
+  document.getElementById('accountBtn').addEventListener('click',()=>{ modal.style.display='flex'; });
+  modal.addEventListener('click',(e)=>{ if(e.target===modal) modal.style.display='none'; });
+
+  // UPDATE PASSWORD
+  document.getElementById('updateBtn').addEventListener('click',()=>{
+    const pass = document.getElementById('newPass').value.trim();
+    if(!pass){ status.textContent='Enter a new password.'; return; }
+    if(!users[user]){ status.textContent='User not found.'; return; }
+    users[user].password = pass;
+    localStorage.setItem('users',JSON.stringify(users));
+    status.textContent='Password updated successfully!';
+    document.getElementById('newPass').value='';
+  });
+
+  // DELETE ACCOUNT
+  document.getElementById('deleteBtn').addEventListener('click',()=>{
+    if(!confirm('Are you sure you want to delete your account?')) return;
+    delete users[user];
+    localStorage.setItem('users',JSON.stringify(users));
+    localStorage.removeItem('currentUser');
+    alert('Account deleted.');
+    window.location.href='index.html';
+  });
+
+  // LOGOUT
+  document.getElementById('logoutBtn').addEventListener('click',()=>{
+    localStorage.removeItem('currentUser');
+    window.location.href='index.html';
+  });
+})();
+</script>
+
+</body>
+</html>
