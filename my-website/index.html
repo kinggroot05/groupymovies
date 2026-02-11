@@ -231,6 +231,7 @@
       .then(() => {
         authCard.classList.add('hidden');
         mainContent.classList.remove('hidden');
+        loadTMDBContent(); // ✅ Load TMDB after login
       })
       .catch(error => {
         loginStatus.textContent = error.message;
@@ -238,13 +239,14 @@
   });
 
   // =========================
-  // AUTO REDIRECT / SHOW CONTENT
+  // AUTO SHOW MAIN CONTENT IF LOGGED IN
   // =========================
   onAuthStateChanged(auth, (user) => {
     if (user) {
       authCard.classList.add('hidden');
       mainContent.classList.remove('hidden');
       welcome.textContent = "Welcome, " + user.email;
+      loadTMDBContent(); // ✅ Load TMDB if already logged in
     } else {
       authCard.classList.remove('hidden');
       mainContent.classList.add('hidden');
@@ -277,11 +279,46 @@
   document.getElementById('deleteBtn').addEventListener('click', async () => {
     const user = auth.currentUser;
     if (!confirm("Are you sure you want to delete your account?")) return;
-    try { await deleteUser(user); alert("Account deleted."); modal.style.display = 'none'; authCard.classList.remove('hidden'); mainContent.classList.add('hidden'); } 
-    catch(e){ status.textContent = e.message; }
+    try { 
+      await deleteUser(user); 
+      alert("Account deleted."); 
+      modal.style.display = 'none'; 
+      authCard.classList.remove('hidden'); 
+      mainContent.classList.add('hidden'); 
+    } catch(e){ status.textContent = e.message; }
   });
+
+  // =========================
+  // TMDB API FUNCTIONS
+  // =========================
+  const TMDB_KEY = "b3f1d49dab58ab74415a42a1a9f4dbef"; // <-- Replace with your TMDB API key
+
+  async function fetchTMDB(url) {
+    const res = await fetch(url);
+    const data = await res.json();
+    return data.results;
+  }
+
+  async function loadTMDBContent() {
+    // Movies
+    const movies = await fetchTMDB(`https://api.themoviedb.org/3/trending/movie/week?api_key=${TMDB_KEY}`);
+    const moviesList = document.getElementById('movies-list');
+    moviesList.innerHTML = movies.map(m => `<div class="item"><img src="https://image.tmdb.org/t/p/w300${m.poster_path}" alt="${m.title}"><p>${m.title}</p></div>`).join('');
+
+    // TV Shows
+    const tvs = await fetchTMDB(`https://api.themoviedb.org/3/trending/tv/week?api_key=${TMDB_KEY}`);
+    const tvList = document.getElementById('tvshows-list');
+    tvList.innerHTML = tvs.map(tv => `<div class="item"><img src="https://image.tmdb.org/t/p/w300${tv.poster_path}" alt="${tv.name}"><p>${tv.name}</p></div>`).join('');
+
+    // Anime (filtered via genre_id 16 for animation)
+    const anime = await fetchTMDB(`https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_KEY}&with_genres=16&sort_by=popularity.desc`);
+    const animeList = document.getElementById('anime-list');
+    animeList.innerHTML = anime.map(a => `<div class="item"><img src="https://image.tmdb.org/t/p/w300${a.poster_path}" alt="${a.title}"><p>${a.title}</p></div>`).join('');
+  }
 
 </script>
 
+
 </body>
 </html>
+
