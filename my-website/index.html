@@ -145,7 +145,6 @@
   });
 
   // REGISTER
-  // REGISTER
 document.getElementById("registerBtn").addEventListener("click", async () => {
   const email = document.getElementById("regEmail").value;
   const password = document.getElementById("regPassword").value;
@@ -162,12 +161,14 @@ document.getElementById("registerBtn").addEventListener("click", async () => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
-    // Correct way to set displayName in Firebase v10
-    await updateProfile(user, {
-      displayName: `${firstName} ${lastName}`
-    });
+    // ✅ Properly set displayName in Firebase v10
+    await updateProfile(user, { displayName: `${firstName} ${lastName}` });
 
     status.textContent = `Account created! Welcome, ${firstName}`;
+
+    // Optional: immediately sign in the user
+    window.location.href = "mainpage.html";
+
   } catch (error) {
     status.textContent = error.message;
   }
@@ -193,6 +194,7 @@ document.getElementById("registerBtn").addEventListener("click", async () => {
 
 </body>
 </html>
+
 
 
 
