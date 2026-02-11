@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login + Create Account</title>
   <style>
     :root{--bg:#0f172a;--card:#111827;--accent:#22c55e;--accent2:#60a5fa;--text:#e5e7eb;--muted:#9ca3af}
@@ -53,19 +53,10 @@
   </div>
 </div>
 
-<!-- Firebase SDK -->
 <script type="module">
-
-  // ✅ ALL IMPORTS MUST BE AT THE TOP
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { 
-    getAuth, 
-    createUserWithEmailAndPassword, 
-    signInWithEmailAndPassword,
-    onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-  // ✅ Firebase Config
   const firebaseConfig = {
     apiKey: "AIzaSyCwhZf8p7oL-o5A25IABMr1w9FYSoUTPZg",
     authDomain: "groupymovie.firebaseapp.com",
@@ -75,9 +66,17 @@
     appId: "1:391687787452:web:025fe4654afeb0f6eed1b9"
   };
 
-  // ✅ Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+
+  // =========================
+  // AUTO REDIRECT IF ALREADY LOGGED IN
+  // =========================
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      window.location.replace("mainpage.html");
+    }
+  });
 
   // =========================
   // TAB SWITCHING
@@ -111,7 +110,7 @@
 
     createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
-        status.textContent = "Account created!";
+        status.textContent = "Account created! You are now logged in.";
       })
       .catch(error => {
         status.textContent = error.message;
@@ -127,32 +126,11 @@
     const status = document.getElementById("loginStatus");
 
     signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        window.location.replace("mainpage.html");
-      })
       .catch(error => {
         status.textContent = error.message;
       });
   });
-
-  // =========================
-  // AUTO REDIRECT IF LOGGED IN
-  // =========================
-  onAuthStateChanged(auth, (user) => {
-    if (user && window.location.pathname.includes("index")) {
-      window.location.replace("mainpage.html");
-    }
-  });
-
 </script>
 
-
 </body>
-
 </html>
-
-
-
-
-
-
