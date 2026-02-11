@@ -24,15 +24,13 @@
   <div class="account-card" style="background:#111827;color:#fff;padding:25px;border-radius:15px;width:360px;box-shadow:0 10px 30px rgba(0,0,0,.4);">
     <h2 id="welcome"></h2>
 
-    <h3>Update Email</h3>
+    <p>Update Email</p>
     <input type="email" id="newEmail" placeholder="New Email" style="width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #374151;background:#020617;color:#fff;">
     <button class="update" id="updateEmailBtn" style="width:100%;padding:10px;margin-top:10px;border:none;border-radius:10px;cursor:pointer;background:#3b82f6;color:#fff;">Update Email</button>
 
-    <h3>Update Password</h3>
+    <p>Update Password</p>
     <input type="password" id="newPass" placeholder="New Password" style="width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #374151;background:#020617;color:#fff;">
     <button class="update" id="updatePassBtn" style="width:100%;padding:10px;margin-top:10px;border:none;border-radius:10px;cursor:pointer;background:#3b82f6;color:#fff;">Update Password</button>
-
-    <h3>Delete Account</h3>
     <button class="delete" id="deleteBtn" style="width:100%;padding:10px;margin-top:10px;border:none;border-radius:10px;cursor:pointer;background:#ef4444;color:#fff;">Delete Account</button>
 
     <hr style="margin:10px 0;border-color:#374151;">
@@ -89,7 +87,7 @@ onAuthStateChanged(auth, user=>{
     // Redirect to login if not authenticated
     window.location.replace("index.html");
   } else {
-    welcome.textContent = "Welcome";
+    welcome.textContent = "Welcome!";
   }
 });
 
