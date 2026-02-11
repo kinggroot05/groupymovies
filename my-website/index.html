@@ -53,7 +53,6 @@
   </div>
 </div>
 
-<script>
 <!-- Firebase SDK -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -61,8 +60,7 @@
     getAuth, 
     createUserWithEmailAndPassword, 
     signInWithEmailAndPassword,
-    onAuthStateChanged,
-    signOut
+    onAuthStateChanged
   } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
   const firebaseConfig = {
@@ -102,12 +100,12 @@
       .then(() => {
         window.location.href = "mainpage.html";
       })
-      .catch(error => {
+      .catch(() => {
         status.textContent = "Invalid login.";
       });
   });
 
-  // Auto redirect if logged in
+  // Auto redirect if already logged in
   onAuthStateChanged(auth, user => {
     if (user) {
       window.location.href = "mainpage.html";
@@ -118,4 +116,5 @@
 </body>
 
 </html>
+
 
