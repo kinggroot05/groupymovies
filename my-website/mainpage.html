@@ -89,17 +89,11 @@ window.addEventListener('click', e=>{
 
 // Auth state
 onAuthStateChanged(auth, user => {
-  if (user) {
-    authCard.classList.add('hidden');
-    mainContent.classList.remove('hidden');
-
-    // Greet first name if displayName exists
-    const firstName = user.displayName ? user.displayName.split(" ")[0] : null;
-    welcome.textContent = firstName ? `Welcome, ${firstName}` : user.email ? `Welcome, ${user.email}` : "Welcome!";
+  if(user){
+    const firstName = user.displayName ? user.displayName.split(" ")[0] : "";
+    welcome.textContent = firstName ? `Welcome, ${firstName}` : `Welcome, ${user.email}`;
   } else {
     welcome.textContent = "Welcome!";
-    authCard.classList.remove('hidden');
-    mainContent.classList.add('hidden');
   }
 });
 
