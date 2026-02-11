@@ -126,16 +126,22 @@ tabRegister.addEventListener('click', () => {
   });
 
   // Auto redirect if already logged in
-  onAuthStateChanged(auth, user => {
-    if (user) {
-      window.location.href = "mainpage.html";
-    }
-  });
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+
+const auth = getAuth();
+
+onAuthStateChanged(auth, (user) => {
+  if (user && window.location.pathname.includes("index")) {
+    window.location.replace("mainpage.html");
+  }
+});
+
 </script>
 
 </body>
 
 </html>
+
 
 
 
