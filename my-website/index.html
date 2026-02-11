@@ -145,31 +145,32 @@
   });
 
   // REGISTER
-  document.getElementById("registerBtn").addEventListener("click", ()=>{
-    const firstName = document.getElementById("regFirstName").value.trim();
-    const lastName = document.getElementById("regLastName").value.trim();
-    const email = document.getElementById("regEmail").value.trim();
-    const password = document.getElementById("regPassword").value.trim();
-    const status = document.getElementById("regStatus");
+  document.getElementById("registerBtn").addEventListener("click", async () => {
+  const email = document.getElementById("regEmail").value;
+  const password = document.getElementById("regPassword").value;
+  const firstName = document.getElementById("regFirstName").value.trim();
+  const lastName = document.getElementById("regLastName").value.trim();
+  const status = document.getElementById("regStatus");
 
-    if(!firstName || !lastName){
-      status.textContent = "Please enter your first and last name.";
-      return;
-    }
+  if (!firstName || !lastName) {
+    status.textContent = "Please enter both first and last name.";
+    return;
+  }
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(userCredential=>{
-        // Update displayName with First + Last name
-        updateProfile(userCredential.user, {
-          displayName: firstName + " " + lastName
-        }).then(()=>{
-          status.textContent = "Account created successfully!";
-        });
-      })
-      .catch(e=>{
-        status.textContent = e.message;
-      });
-  });
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    // Save full name in displayName
+    await user.updateProfile({
+      displayName: `${firstName} ${lastName}`
+    });
+
+    status.textContent = `Account created! Welcome, ${firstName}`;
+  } catch (error) {
+    status.textContent = error.message;
+  }
+});
 
   // LOGIN
   document.getElementById("loginBtn").addEventListener("click", ()=>{
@@ -190,4 +191,5 @@
 
 </body>
 </html>
+
 
