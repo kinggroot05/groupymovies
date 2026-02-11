@@ -90,28 +90,20 @@ window.addEventListener('click', e=>{
 });
 
 // Auth state
-onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(auth, (user) => {
   if (user) {
+    const firstName = user.displayName 
+      ? user.displayName.split(" ")[0] 
+      : null;
 
-    // 🔥 Force refresh user data
-    await user.reload();
-
-    const updatedUser = auth.currentUser;
-
-    let firstName = "";
-
-    if (updatedUser.displayName) {
-      firstName = updatedUser.displayName.split(" ")[0];
-    }
-
-    welcome.textContent = firstName 
-      ? `Welcome, ${firstName}` 
-      : `Welcome, ${updatedUser.email}`;
-
+    welcome.textContent = firstName
+      ? `Welcome, ${firstName}`
+      : `Welcome, ${user.email}`;
   } else {
     welcome.textContent = "Welcome!";
   }
 });
+
 // Logout
 document.getElementById('logoutBtn').addEventListener('click', async ()=>{
   await signOut(auth);
