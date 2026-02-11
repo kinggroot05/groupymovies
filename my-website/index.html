@@ -118,7 +118,7 @@ tabRegister.addEventListener('click', () => {
 
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        window.location.href = "mainpage.html";
+        //window.location.href = "mainpage.html";
       })
       .catch(() => {
         status.textContent = "Invalid login.";
@@ -141,6 +141,7 @@ onAuthStateChanged(auth, (user) => {
 </body>
 
 </html>
+
 
 
 
