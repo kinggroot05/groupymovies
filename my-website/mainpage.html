@@ -92,11 +92,11 @@ onAuthStateChanged(auth, user => {
   if (user) {
     authCard.classList.add('hidden');
     mainContent.classList.remove('hidden');
-    // Greet first name if displayName exists, fallback to email, else generic "Welcome!"
-    welcome.textContent = "Welcome, " + (user.displayName ? user.displayName.split(" ")[0] : "!");
 
+    // Greet first name if displayName exists
+    const firstName = user.displayName ? user.displayName.split(" ")[0] : null;
+    welcome.textContent = firstName ? `Welcome, ${firstName}` : user.email ? `Welcome, ${user.email}` : "Welcome!";
   } else {
-    // No user logged in
     welcome.textContent = "Welcome!";
     authCard.classList.remove('hidden');
     mainContent.classList.add('hidden');
