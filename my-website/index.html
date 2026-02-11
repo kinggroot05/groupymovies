@@ -3,11 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login + Create Account</title>
+  <title>Free Movies For You</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
   <style>
+    /* Hide body until Firebase determines auth state */
+    body { visibility: hidden; }
+
+    /* Login/Register card */
     :root{--bg:#0f172a;--card:#111827;--accent:#22c55e;--accent2:#60a5fa;--text:#e5e7eb;--muted:#9ca3af}
     *{box-sizing:border-box;font-family:system-ui,Segoe UI,Arial}
-    body{margin:0;background:linear-gradient(135deg,#0b1024,#111827);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center}
     .card{width:360px;background:#111827;padding:22px;border-radius:16px;box-shadow:0 10px 35px rgba(0,0,0,.4)}
     h2{margin:0 0 10px}
     label{display:block;margin-top:12px;font-size:.9rem}
@@ -20,117 +28,192 @@
     .active{background:#60a5fa}
     .hidden{display:none}
     .status{margin-top:10px;font-weight:600;color:#9ca3af}
+
+    /* Account modal */
+    .account-modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:9999}
+    .account-card{background:#111827;color:#fff;padding:25px;border-radius:15px;width:320px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+    .account-card input{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #374151;background:#020617;color:#fff}
+    .account-card button{padding:10px;border:none;border-radius:10px;margin-top:8px;cursor:pointer;width:100%}
+    .account-card .update{background:#3b82f6;color:#fff}
+    .account-card .delete{background:#ef4444;color:#fff}
+    .account-card .logout{background:#22c55e;color:#fff}
+    .account-card .status{margin-top:10px;font-weight:bold}
+
+    /* Hide main content initially */
+    #mainContent{display:none;}
   </style>
 </head>
 <body>
 
-<div class="card">
-  <div class="tabs">
-    <div class="tab active" id="tabLogin">Login</div>
-    <div class="tab" id="tabRegister">Create</div>
+  <!-- LOGIN/REGISTER CARD -->
+  <div class="card" id="loginRegisterCard">
+    <div class="tabs">
+      <div class="tab active" id="tabLogin">Login</div>
+      <div class="tab" id="tabRegister">Create</div>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="loginPanel">
+      <h2>Login</h2>
+      <label>Email</label>
+      <input id="loginUser" />
+      <label>Password</label>
+      <input type="password" id="loginPass" />
+      <button class="primary" type="button" id="loginBtn">Login</button>
+      <div id="loginStatus" class="status"></div>
+    </div>
+
+    <!-- REGISTER -->
+    <div id="registerPanel" class="hidden">
+      <h2>Create Account</h2>
+      <label>Email</label>
+      <input id="regUser" />
+      <label>Password</label>
+      <input type="password" id="regPass" />
+      <button class="secondary" type="button" id="createBtn">Create Account</button>
+      <div id="regStatus" class="status"></div>
+    </div>
   </div>
 
-  <!-- LOGIN -->
-  <div id="loginPanel">
-    <h2>Login</h2>
-    <label>Email</label>
-    <input id="loginUser" />
-    <label>Password</label>
-    <input type="password" id="loginPass" />
-    <button class="primary" type="button" id="loginBtn">Login</button>
-    <div id="loginStatus" class="status"></div>
+  <!-- MAIN CONTENT -->
+  <div id="mainContent">
+    <!-- MAIN PAGE CONTENT COPIED FROM YOUR PREVIOUS MAINPAGE -->
+    <div class="navbar">
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <input type="text" class="search-bar" placeholder="Search..." onfocus="openSearchModal()" />
+        <button id="accountBtn" class="contact-btn">Account</button>
+      </div>
+    </div>
+
+    <div class="banner" id="banner">
+      <h1 id="banner-title"></h1>
+    </div>
+
+    <div class="row">
+      <h2>Trending Movies</h2>
+      <div class="list" id="movies-list"></div>
+    </div>
+
+    <div class="row">
+      <h2>Trending TV Shows</h2>
+      <div class="list" id="tvshows-list"></div>
+    </div>
+
+    <div class="row">
+      <h2>Trending Anime</h2>
+      <div class="list" id="anime-list"></div>
+    </div>
+
+    <!-- modal, search modal, footer, account modal, contact popup copied from your mainpage.html -->
+    <div class="modal" id="modal"> ... </div>
+    <div class="search-modal" id="search-modal"> ... </div>
+    <footer class="footer"> ... </footer>
+    <div id="contactPopup" class="contact-popup"> ... </div>
+    <div id="accountModal" class="account-modal"> ... </div>
   </div>
 
-  <!-- REGISTER -->
-  <div id="registerPanel" class="hidden">
-    <h2>Create Account</h2>
-    <label>Email</label>
-    <input id="regUser" />
-    <label>Password</label>
-    <input type="password" id="regPass" />
-    <button class="secondary" type="button" id="createBtn">Create Account</button>
-    <div id="regStatus" class="status"></div>
-  </div>
-</div>
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { 
+      getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+      onAuthStateChanged, signOut, updatePassword, deleteUser
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    const firebaseConfig = {
+      apiKey: "YOUR_KEY",
+      authDomain: "groupymovie.firebaseapp.com",
+      projectId: "groupymovie",
+      storageBucket: "groupymovie.firebasestorage.app",
+      messagingSenderId: "391687787452",
+      appId: "1:391687787452:web:025fe4654afeb0f6eed1b9"
+    };
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCwhZf8p7oL-o5A25IABMr1w9FYSoUTPZg",
-    authDomain: "groupymovie.firebaseapp.com",
-    projectId: "groupymovie",
-    storageBucket: "groupymovie.firebasestorage.app",
-    messagingSenderId: "391687787452",
-    appId: "1:391687787452:web:025fe4654afeb0f6eed1b9"
-  };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+    const loginRegisterCard = document.getElementById("loginRegisterCard");
+    const mainContent = document.getElementById("mainContent");
+    const modal = document.getElementById('accountModal');
+    const status = document.getElementById('status');
+    const welcome = document.getElementById('welcome');
 
-  // =========================
-  // AUTO REDIRECT IF ALREADY LOGGED IN
-  // =========================
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      window.location.replace("mainpage.html");
-    }
-  });
+    // TAB SWITCHING
+    const tabLogin = document.getElementById('tabLogin');
+    const tabRegister = document.getElementById('tabRegister');
+    const loginPanel = document.getElementById('loginPanel');
+    const registerPanel = document.getElementById('registerPanel');
 
-  // =========================
-  // TAB SWITCHING
-  // =========================
-  const tabLogin = document.getElementById('tabLogin');
-  const tabRegister = document.getElementById('tabRegister');
-  const loginPanel = document.getElementById('loginPanel');
-  const registerPanel = document.getElementById('registerPanel');
+    tabLogin.addEventListener('click', () => {
+      tabLogin.classList.add('active');
+      tabRegister.classList.remove('active');
+      loginPanel.classList.remove('hidden');
+      registerPanel.classList.add('hidden');
+    });
+    tabRegister.addEventListener('click', () => {
+      tabRegister.classList.add('active');
+      tabLogin.classList.remove('active');
+      registerPanel.classList.remove('hidden');
+      loginPanel.classList.add('hidden');
+    });
 
-  tabLogin.addEventListener('click', () => {
-    tabLogin.classList.add('active');
-    tabRegister.classList.remove('active');
-    loginPanel.classList.remove('hidden');
-    registerPanel.classList.add('hidden');
-  });
+    // REGISTER
+    document.getElementById("createBtn").addEventListener("click", () => {
+      const email = document.getElementById("regUser").value;
+      const password = document.getElementById("regPass").value;
+      const status = document.getElementById("regStatus");
 
-  tabRegister.addEventListener('click', () => {
-    tabRegister.classList.add('active');
-    tabLogin.classList.remove('active');
-    registerPanel.classList.remove('hidden');
-    loginPanel.classList.add('hidden');
-  });
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(() => { status.textContent = "Account created!"; })
+        .catch(error => { status.textContent = error.message; });
+    });
 
-  // =========================
-  // REGISTER
-  // =========================
-  document.getElementById("createBtn").addEventListener("click", () => {
-    const email = document.getElementById("regUser").value;
-    const password = document.getElementById("regPass").value;
-    const status = document.getElementById("regStatus");
+    // LOGIN
+    document.getElementById("loginBtn").addEventListener("click", () => {
+      const email = document.getElementById("loginUser").value;
+      const password = document.getElementById("loginPass").value;
+      const status = document.getElementById("loginStatus");
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        status.textContent = "Account created! You are now logged in.";
-      })
-      .catch(error => {
-        status.textContent = error.message;
-      });
-  });
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => { loginRegisterCard.style.display = "none"; mainContent.style.display = "block"; })
+        .catch(error => { status.textContent = error.message; });
+    });
 
-  // =========================
-  // LOGIN
-  // =========================
-  document.getElementById("loginBtn").addEventListener("click", () => {
-    const email = document.getElementById("loginUser").value;
-    const password = document.getElementById("loginPass").value;
-    const status = document.getElementById("loginStatus");
+    // FIREBASE AUTH STATE
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        loginRegisterCard.style.display = "none";
+        mainContent.style.display = "block";
+        welcome.textContent = "Welcome, " + user.email;
+      } else {
+        loginRegisterCard.style.display = "block";
+        mainContent.style.display = "none";
+      }
+      // Show body now that Firebase finished check
+      document.body.style.visibility = "visible";
+    });
 
-    signInWithEmailAndPassword(auth, email, password)
-      .catch(error => {
-        status.textContent = error.message;
-      });
-  });
-</script>
+    // ACCOUNT MODAL
+    document.getElementById('accountBtn').addEventListener('click', () => { modal.style.display = "flex"; });
+    document.getElementById('logoutBtn').addEventListener('click', async () => { await signOut(auth); });
+    document.getElementById('updateBtn').addEventListener('click', async () => {
+      const user = auth.currentUser;
+      const newPass = document.getElementById('newPass').value.trim();
+      if (!newPass) { status.textContent = "Enter a new password."; return; }
+      try { await updatePassword(user, newPass); status.textContent = "Password updated!"; document.getElementById('newPass').value=""; }
+      catch(e){ status.textContent=e.message; }
+    });
+    document.getElementById('deleteBtn').addEventListener('click', async () => {
+      const user = auth.currentUser;
+      if (!confirm("Delete your account?")) return;
+      try { await deleteUser(user); } catch(e){ status.textContent=e.message; }
+    });
+
+  </script>
+
+  <!-- Home.js script -->
+  <script src="js/home.js" defer></script>
 
 </body>
 </html>
