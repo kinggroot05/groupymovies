@@ -1,99 +1,27 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Free Movies For You</title>
-<link rel="stylesheet" href="css/home.css">
-<link rel="preload" href="css/home.css" as="style">
-<link rel="preload" href="js/home.js" as="script">
-<link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<script defer src="js/home.js"></script>
-
-<style>
-  :root{--bg:#0f172a;--card:#111827;--accent:#22c55e;--accent2:#60a5fa;--text:#e5e7eb;--muted:#9ca3af}
-  *{box-sizing:border-box;font-family:system-ui,Segoe UI,Arial}
-  body{margin:0;background:linear-gradient(135deg,#0b1024,#111827);color:var(--text);min-height:100vh}
-
-  /* LOGIN / REGISTER */
-  .card{width:360px;background:#111827;padding:22px;border-radius:16px;box-shadow:0 10px 35px rgba(0,0,0,.4);margin:30px auto}
-  h2{margin:0 0 10px}
-  label{display:block;margin-top:12px;font-size:.9rem}
-  input{width:100%;padding:10px;border-radius:10px;border:1px solid #374151;background:#020617;color:#e5e7eb;margin-top:6px}
-  button{width:100%;padding:10px;border:none;border-radius:12px;color:white;cursor:pointer;margin-top:14px}
-  .primary{background:var(--accent)}
-  .secondary{background:var(--accent2)}
-  .tabs{display:flex;gap:6px;margin-bottom:12px}
-  .tab{flex:1;text-align:center;padding:8px;border-radius:10px;background:#020617;cursor:pointer}
-  .active{background:#60a5fa}
-  .hidden{display:none}
-  .status{margin-top:10px;font-weight:600;color:#9ca3af}
-
-  /* NAVBAR / ROWS */
-  .navbar{background:#111827;padding:10px 20px;display:flex;justify-content:space-between;align-items:center}
-  .navbar a{color:#fff;text-decoration:none;margin-right:15px}
-  .row{margin:20px}
-  .list{display:flex;gap:10px;overflow-x:auto;padding-bottom:10px}
-  .item{min-width:150px;cursor:pointer}
-  .item img{width:100%;border-radius:8px}
-  .item p{text-align:center;margin:5px 0;font-size:0.9rem}
-
-  /* MODALS */
-  .modal, .account-modal, .search-modal{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:9998}
-  .modal-content, .account-card{background:#111827;border-radius:15px;padding:15px;width:90%;max-width:700px;position:relative;color:#fff}
-  .modal-content img{width:100%;border-radius:10px}
-  .modal-text{margin-top:10px}
-  .close{position:absolute;top:10px;right:15px;font-size:24px;cursor:pointer}
-  .server-selector{margin-top:10px;color:#fff}
-  .account-card input{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #374151;background:#020617;color:#fff}
-  .account-card button{padding:10px;border:none;border-radius:10px;margin-top:8px;cursor:pointer;width:100%}
-  .account-card .update{background:#3b82f6;color:#fff}
-  .account-card .delete{background:#ef4444;color:#fff}
-  .account-card .logout{background:#22c55e;color:#fff}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Free Movies For You </title>
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="preload" href="css/home.css" as="style">
+  <link rel="preload" href="js/home.js" as="script">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script defer src="js/home.js"></script>
 </head>
+
 <body>
-
-<!-- LOGIN / REGISTER CARD -->
-<div class="card" id="authCard">
-  <div class="tabs">
-    <div class="tab active" id="tabLogin">Login</div>
-    <div class="tab" id="tabRegister">Create</div>
-  </div>
-
-  <div id="loginPanel">
-    <h2>Login</h2>
-    <label>Email</label>
-    <input id="loginUser" />
-    <label>Password</label>
-    <input type="password" id="loginPass" />
-    <button class="primary" type="button" id="loginBtn">Login</button>
-    <div id="loginStatus" class="status"></div>
-  </div>
-
-  <div id="registerPanel" class="hidden">
-    <h2>Create Account</h2>
-    <label>Email</label>
-    <input id="regUser" />
-    <label>Password</label>
-    <input type="password" id="regPass" />
-    <button class="secondary" type="button" id="createBtn">Create Account</button>
-    <div id="regStatus" class="status"></div>
-  </div>
-</div>
-
-<!-- MAIN CONTENT -->
-<div id="mainContent" class="hidden">
   <div class="navbar">
     <div class="nav-links">
-      <a href="#">Home</a>
-      <input type="text" class="search-bar" placeholder="Search..." />
-      <button id="accountBtn" class="contact-btn">Account</button>
+      <a href="index.html">Home</a>
+      <input type="text" class="search-bar" placeholder="Search..." onfocus="openSearchModal()" />
     </div>
   </div>
 
-  <div class="banner" id="banner"><h1 id="banner-title"></h1></div>
+  <div class="banner" id="banner">
+    <h1 id="banner-title"></h1>
+  </div>
 
   <div class="row">
     <h2>Trending Movies</h2>
@@ -110,19 +38,21 @@
     <div class="list" id="anime-list"></div>
   </div>
 
-  <!-- VIDEO MODAL -->
   <div class="modal" id="modal">
     <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <img id="modal-image" src="" alt="">
-      <div class="modal-text">
-        <h2 id="modal-title"></h2>
-        <div id="modal-rating"></div>
-        <p id="modal-description"></p>
-      </div>
+      <span class="close" onclick="closeModal()" style="color: red;">&times;</span>
+      <div class="modal-body">
+  <img id="modal-image" src="" alt="" />
+  <div class="modal-text">
+    <h2 id="modal-title"></h2>
+    <div class="stars" id="modal-rating"></div>
+    <p id="modal-description"></p>
+  </div>
+</div>
+      
       <div class="server-selector">
-        <label for="server">Server:</label>
-        <select id="server">
+        <label for="server">Change Server:</label>
+        <select id="server" onchange="changeServer()">
           <option value="vidsrc.cc">Daphne</option>
           <option value="vidsrc.me">Babelyn</option>
           <option value="player.videasy.net">Monica</option>
@@ -132,127 +62,36 @@
     </div>
   </div>
 
-  <!-- ACCOUNT MODAL -->
-  <div id="accountModal" class="account-modal">
-    <div class="account-card">
-      <h2 id="welcome"></h2>
-      <h3>Change Password</h3>
-      <input type="password" id="newPass" placeholder="New Password">
-      <button class="update" id="updateBtn">Update Account</button>
-      <h3>Delete Account</h3>
-      <button class="delete" id="deleteBtn">Delete Account</button>
-      <hr>
-      <button class="logout" id="logoutBtn">Logout</button>
-      <div class="status" id="status"></div>
+  <div class="search-modal" id="search-modal">
+    <span class="close" onclick="closeSearchModal()" style="color: red;">&times;</span>
+    <input type="text" id="search-input" placeholder="Search for a movie or show..." oninput="searchTMDB()" />
+    <div class="results" id="search-results"></div>
+  </div>
+
+
+<footer class="footer">
+  <div class="footer-content">
+    <p>&copy; 2026 Group 5's Website. All rights reserved.</p>
+
+    <div class="footer-links">
+      <button id="contactBtn" class="contact-btn">Contact Us</button>
     </div>
+  </div>
+</footer>
+
+<!-- Contact Popup -->
+<div id="contactPopup" class="contact-popup">
+  <div class="popup-box">
+    <button id="closePopup" class="close-btn">✖</button>
+
+    <a href="https://facebook.com" target="_blank" title="Facebook">📘</a>
+    <a href="https://instagram.com" target="_blank" title="Instagram">📸</a>
+    <a href="https://discord.com" target="_blank" title="Discord">🎮</a>
   </div>
 </div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { 
-    getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-    onAuthStateChanged, signOut, updatePassword, deleteUser 
-  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyCwhZf8p7oL-o5A25IABMr1w9FYSoUTPZg",
-    authDomain: "groupymovie.firebaseapp.com",
-    projectId: "groupymovie",
-    storageBucket: "groupymovie.firebasestorage.app",
-    messagingSenderId: "391687787452",
-    appId: "1:391687787452:web:025fe4654afeb0f6eed1b9"
-  };
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  const authCard = document.getElementById('authCard');
-  const mainContent = document.getElementById('mainContent');
-  const modal = document.getElementById('accountModal');
-  const status = document.getElementById('status');
-  const welcome = document.getElementById('welcome');
-
-  // TAB SWITCH
-  const tabLogin = document.getElementById('tabLogin');
-  const tabRegister = document.getElementById('tabRegister');
-  const loginPanel = document.getElementById('loginPanel');
-  const registerPanel = document.getElementById('registerPanel');
-
-  tabLogin.addEventListener('click',()=>{tabLogin.classList.add('active');tabRegister.classList.remove('active');loginPanel.classList.remove('hidden');registerPanel.classList.add('hidden');});
-  tabRegister.addEventListener('click',()=>{tabRegister.classList.add('active');tabLogin.classList.remove('active');registerPanel.classList.remove('hidden');loginPanel.classList.add('hidden');});
-
-  // REGISTER
-  document.getElementById("createBtn").addEventListener("click",()=>{
-    const email=document.getElementById("regUser").value;
-    const password=document.getElementById("regPass").value;
-    const regStatus=document.getElementById("regStatus");
-    createUserWithEmailAndPassword(auth,email,password).then(()=>{regStatus.textContent="Account created!";}).catch(e=>{regStatus.textContent=e.message;});
-  });
-
-  // LOGIN
-  document.getElementById("loginBtn").addEventListener("click",()=>{
-    const email=document.getElementById("loginUser").value;
-    const password=document.getElementById("loginPass").value;
-    const loginStatus=document.getElementById("loginStatus");
-    signInWithEmailAndPassword(auth,email,password)
-      .then(()=>{authCard.classList.add('hidden');mainContent.classList.remove('hidden');loadTMDBContent();})
-      .catch(e=>{loginStatus.textContent=e.message;});
-  });
-
-  // AUTO SHOW IF LOGGED IN
-  onAuthStateChanged(auth,(user)=>{
-    if(user){authCard.classList.add('hidden');mainContent.classList.remove('hidden');welcome.textContent="Welcome, "+user.email;loadTMDBContent();}
-    else{authCard.classList.remove('hidden');mainContent.classList.add('hidden');}
-  });
-
-  // ACCOUNT MODAL
-  document.getElementById('accountBtn').addEventListener('click',()=>{modal.style.display='flex';});
-  document.getElementById('logoutBtn').addEventListener('click',async()=>{await signOut(auth);modal.style.display='none';welcome.textContent='';document.getElementById('newPass').value='';status.textContent='';});
-  document.getElementById('updateBtn').addEventListener('click',async()=>{
-    const user=auth.currentUser;
-    const newPass=document.getElementById('newPass').value.trim();
-    if(!newPass){status.textContent="Enter a new password.";return;}
-    try{await updatePassword(user,newPass);status.textContent="Password updated!";document.getElementById('newPass').value='';}catch(e){status.textContent=e.message;}
-  });
-  document.getElementById('deleteBtn').addEventListener('click',async()=>{
-    const user=auth.currentUser;
-    if(!confirm("Are you sure you want to delete your account?")) return;
-    try{await deleteUser(user);alert("Account deleted.");modal.style.display='none';authCard.classList.remove('hidden');mainContent.classList.add('hidden');}catch(e){status.textContent=e.message;}
-  });
-
-  // TMDB API
-  const TMDB_KEY="b3f1d49dab58ab74415a42a1a9f4dbef";
-  async function fetchTMDB(url){const res=await fetch(url);const data=await res.json();return data.results;}
-  async function loadTMDBContent(){
-    const movies=await fetchTMDB(`https://api.themoviedb.org/3/trending/movie/week?api_key=${TMDB_KEY}`);
-    document.getElementById('movies-list').innerHTML=movies.map(m=>`<div class="item" onclick="openVideo('${encodeURIComponent(m.title)}','${m.poster_path}','${m.vote_average}','${m.overview}')"><img src="https://image.tmdb.org/t/p/w300${m.poster_path}" alt="${m.title}"><p>${m.title}</p></div>`).join('');
-    
-    const tvs=await fetchTMDB(`https://api.themoviedb.org/3/trending/tv/week?api_key=${TMDB_KEY}`);
-    document.getElementById('tvshows-list').innerHTML=tvs.map(tv=>`<div class="item" onclick="openVideo('${encodeURIComponent(tv.name)}','${tv.poster_path}','${tv.vote_average}','${tv.overview}')"><img src="https://image.tmdb.org/t/p/w300${tv.poster_path}" alt="${tv.name}"><p>${tv.name}</p></div>`).join('');
-
-    const anime=await fetchTMDB(`https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_KEY}&with_genres=16&sort_by=popularity.desc`);
-    document.getElementById('anime-list').innerHTML=anime.map(a=>`<div class="item" onclick="openVideo('${encodeURIComponent(a.title)}','${a.poster_path}','${a.vote_average}','${a.overview}')"><img src="https://image.tmdb.org/t/p/w300${a.poster_path}" alt="${a.title}"><p>${a.title}</p></div>`).join('');
-  }
-
-  // VIDEO MODAL
-  const videoModal=document.getElementById('modal');
-  const videoFrame=document.getElementById('modal-video');
-  function openVideo(title,poster,rating,desc){
-    document.getElementById('modal-title').textContent=decodeURIComponent(title);
-    document.getElementById('modal-image').src="https://image.tmdb.org/t/p/w500"+poster;
-    document.getElementById('modal-rating').textContent="Rating: "+rating;
-    document.getElementById('modal-description').textContent=desc;
-    videoFrame.src="https://player.videasy.net/?v="+title; // Placeholder
-    videoModal.style.display="flex";
-  }
-  function closeModal(){videoModal.style.display="none";videoFrame.src="";}
-
-  window.addEventListener('click',(e)=>{
-    if(e.target===videoModal){closeModal();}
-    if(e.target===modal){modal.style.display='none';}
-  });
-  window.addEventListener('keydown',(e)=>{if(e.key==='Escape'){closeModal();modal.style.display='none';}});
-</script>
+<!-- Link JS file -->
+<script src="js/home.js"></script>
 
 </body>
-</html>
+
