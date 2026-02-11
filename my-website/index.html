@@ -1,52 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Free Movies For You</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Free Movies For You</title>
+<link rel="stylesheet" href="css/home.css">
+<link rel="preload" href="css/home.css" as="style">
+<link rel="preload" href="js/home.js" as="script">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script defer src="js/home.js"></script>
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/home.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  /* ===== BODY & FADE-IN ===== */
+  body {
+    margin: 0;
+    font-family: system-ui, Segoe UI, Arial;
+    background: linear-gradient(135deg,#0b1024,#111827);
+    color: #e5e7eb;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden; /* hidden until Firebase check */
+  }
 
-  <style>
-    /* Hide body until Firebase determines auth state */
-    body { visibility: hidden; }
+  body.loaded { visibility: visible; transition: visibility 0.3s ease-in; }
 
-    /* Login/Register card */
-    :root{--bg:#0f172a;--card:#111827;--accent:#22c55e;--accent2:#60a5fa;--text:#e5e7eb;--muted:#9ca3af}
-    *{box-sizing:border-box;font-family:system-ui,Segoe UI,Arial}
-    .card{width:360px;background:#111827;padding:22px;border-radius:16px;box-shadow:0 10px 35px rgba(0,0,0,.4)}
-    h2{margin:0 0 10px}
-    label{display:block;margin-top:12px;font-size:.9rem}
-    input{width:100%;padding:10px;border-radius:10px;border:1px solid #374151;background:#020617;color:#e5e7eb;margin-top:6px}
-    button{width:100%;padding:10px;border:none;border-radius:12px;color:white;cursor:pointer;margin-top:14px}
-    .primary{background:var(--accent)}
-    .secondary{background:var(--accent2)}
-    .tabs{display:flex;gap:6px;margin-bottom:12px}
-    .tab{flex:1;text-align:center;padding:8px;border-radius:10px;background:#020617;cursor:pointer}
-    .active{background:#60a5fa}
-    .hidden{display:none}
-    .status{margin-top:10px;font-weight:600;color:#9ca3af}
+  /* ===== LOGIN/REGISTER CARD ===== */
+  .card {
+    width: 360px;
+    max-width: 90%;
+    background: #111827;
+    padding: 22px;
+    border-radius: 16px;
+    box-shadow: 0 10px 35px rgba(0,0,0,.4);
+  }
 
-    /* Account modal */
-    .account-modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:9999}
-    .account-card{background:#111827;color:#fff;padding:25px;border-radius:15px;width:320px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
-    .account-card input{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #374151;background:#020617;color:#fff}
-    .account-card button{padding:10px;border:none;border-radius:10px;margin-top:8px;cursor:pointer;width:100%}
-    .account-card .update{background:#3b82f6;color:#fff}
-    .account-card .delete{background:#ef4444;color:#fff}
-    .account-card .logout{background:#22c55e;color:#fff}
-    .account-card .status{margin-top:10px;font-weight:bold}
+  h2 { margin: 0 0 10px; }
+  label { display:block; margin-top:12px; font-size:.9rem; }
+  input { width:100%; padding:10px; border-radius:10px; border:1px solid #374151; background:#020617; color:#e5e7eb; margin-top:6px; }
+  button { width:100%; padding:10px; border:none; border-radius:12px; color:white; cursor:pointer; margin-top:14px; }
+  .primary { background:#22c55e; }
+  .secondary { background:#60a5fa; }
+  .tabs { display:flex; gap:6px; margin-bottom:12px; }
+  .tab { flex:1; text-align:center; padding:8px; border-radius:10px; background:#020617; cursor:pointer; }
+  .active { background:#60a5fa; }
+  .hidden { display:none; }
+  .status { margin-top:10px; font-weight:600; color:#9ca3af; }
 
-    /* Hide main content initially */
-    #mainContent{display:none;}
-  </style>
+  /* ===== MAIN CONTENT ===== */
+  .main-container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 15px;
+    display: none; /* hidden until auth passes */
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    text-align: center;
+  }
+
+  .row h2 { margin-bottom:10px; }
+  .list { display:flex; flex-wrap: wrap; gap:10px; }
+
+  /* ===== ACCOUNT MODAL ===== */
+  .account-modal { position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; z-index:9999; }
+  .account-card { background:#111827; color:#fff; padding:25px; border-radius:15px; width:320px; box-shadow:0 10px 30px rgba(0,0,0,.4); }
+  .account-card input { width:100%; padding:10px; margin:8px 0; border-radius:8px; border:1px solid #374151; background:#020617; color:#fff; }
+  .account-card button { padding:10px; border:none; border-radius:10px; margin-top:8px; cursor:pointer; width:100%; }
+  .account-card .update { background:#3b82f6; color:#fff; }
+  .account-card .delete { background:#ef4444; color:#fff; }
+  .account-card .logout { background:#22c55e; color:#fff; }
+  .account-card .status { margin-top:10px; font-weight:bold; }
+</style>
 </head>
-<body>
 
-  <!-- LOGIN/REGISTER CARD -->
-  <div class="card" id="loginRegisterCard">
+<body>
+  <!-- ===== LOGIN/REGISTER CARD ===== -->
+  <div id="loginRegisterCard" class="card">
     <div class="tabs">
       <div class="tab active" id="tabLogin">Login</div>
       <div class="tab" id="tabRegister">Create</div>
@@ -75,19 +114,18 @@
     </div>
   </div>
 
-  <!-- MAIN CONTENT -->
-  <div id="mainContent">
-    <!-- MAIN PAGE CONTENT COPIED FROM YOUR PREVIOUS MAINPAGE -->
+  <!-- ===== MAIN CONTENT ===== -->
+  <div id="mainContent" class="main-container">
     <div class="navbar">
       <div class="nav-links">
-        <a href="index.html">Home</a>
+        <a href="#">Home</a>
         <input type="text" class="search-bar" placeholder="Search..." onfocus="openSearchModal()" />
         <button id="accountBtn" class="contact-btn">Account</button>
       </div>
     </div>
 
     <div class="banner" id="banner">
-      <h1 id="banner-title"></h1>
+      <h1 id="banner-title">Welcome to Free Movies For You</h1>
     </div>
 
     <div class="row">
@@ -104,116 +142,141 @@
       <h2>Trending Anime</h2>
       <div class="list" id="anime-list"></div>
     </div>
-
-    <!-- modal, search modal, footer, account modal, contact popup copied from your mainpage.html -->
-    <div class="modal" id="modal"> ... </div>
-    <div class="search-modal" id="search-modal"> ... </div>
-    <footer class="footer"> ... </footer>
-    <div id="contactPopup" class="contact-popup"> ... </div>
-    <div id="accountModal" class="account-modal"> ... </div>
   </div>
 
-  <!-- Firebase SDK -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { 
-      getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-      onAuthStateChanged, signOut, updatePassword, deleteUser
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  <!-- ===== ACCOUNT MODAL ===== -->
+  <div id="accountModal" class="account-modal">
+    <div class="account-card">
+      <h2 id="welcome"></h2>
 
-    const firebaseConfig = {
-      apiKey: "YOUR_KEY",
-      authDomain: "groupymovie.firebaseapp.com",
-      projectId: "groupymovie",
-      storageBucket: "groupymovie.firebasestorage.app",
-      messagingSenderId: "391687787452",
-      appId: "1:391687787452:web:025fe4654afeb0f6eed1b9"
-    };
+      <h3>Change Password</h3>
+      <input type="password" id="newPass" placeholder="New Password">
+      <button class="update" id="updateBtn">Update Account</button>
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+      <h3>Delete Account</h3>
+      <button class="delete" id="deleteBtn">Delete Account</button>
 
-    const loginRegisterCard = document.getElementById("loginRegisterCard");
-    const mainContent = document.getElementById("mainContent");
-    const modal = document.getElementById('accountModal');
-    const status = document.getElementById('status');
-    const welcome = document.getElementById('welcome');
+      <hr>
+      <button class="logout" id="logoutBtn">Logout</button>
 
-    // TAB SWITCHING
-    const tabLogin = document.getElementById('tabLogin');
-    const tabRegister = document.getElementById('tabRegister');
-    const loginPanel = document.getElementById('loginPanel');
-    const registerPanel = document.getElementById('registerPanel');
+      <div class="status" id="status"></div>
+    </div>
+  </div>
 
-    tabLogin.addEventListener('click', () => {
-      tabLogin.classList.add('active');
-      tabRegister.classList.remove('active');
-      loginPanel.classList.remove('hidden');
-      registerPanel.classList.add('hidden');
-    });
-    tabRegister.addEventListener('click', () => {
-      tabRegister.classList.add('active');
-      tabLogin.classList.remove('active');
-      registerPanel.classList.remove('hidden');
-      loginPanel.classList.add('hidden');
-    });
+<!-- ================= FIREBASE AUTH ================= -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { 
+    getAuth, 
+    onAuthStateChanged, 
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword,
+    signOut,
+    updatePassword,
+    deleteUser
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-    // REGISTER
-    document.getElementById("createBtn").addEventListener("click", () => {
-      const email = document.getElementById("regUser").value;
-      const password = document.getElementById("regPass").value;
-      const status = document.getElementById("regStatus");
+  // Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyCwhZf8p7oL-o5A25IABMr1w9FYSoUTPZg",
+    authDomain: "groupymovie.firebaseapp.com",
+    projectId: "groupymovie",
+    storageBucket: "groupymovie.firebasestorage.app",
+    messagingSenderId: "391687787452",
+    appId: "1:391687787452:web:025fe4654afeb0f6eed1b9"
+  };
 
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(() => { status.textContent = "Account created!"; })
-        .catch(error => { status.textContent = error.message; });
-    });
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
-    // LOGIN
-    document.getElementById("loginBtn").addEventListener("click", () => {
-      const email = document.getElementById("loginUser").value;
-      const password = document.getElementById("loginPass").value;
-      const status = document.getElementById("loginStatus");
+  const loginCard = document.getElementById('loginRegisterCard');
+  const mainContent = document.getElementById('mainContent');
+  const modal = document.getElementById('accountModal');
+  const status = document.getElementById('status');
+  const welcome = document.getElementById('welcome');
 
-      signInWithEmailAndPassword(auth, email, password)
-        .then(() => { loginRegisterCard.style.display = "none"; mainContent.style.display = "block"; })
-        .catch(error => { status.textContent = error.message; });
-    });
+  // ================= TAB SWITCHING =================
+  const tabLogin = document.getElementById('tabLogin');
+  const tabRegister = document.getElementById('tabRegister');
+  const loginPanel = document.getElementById('loginPanel');
+  const registerPanel = document.getElementById('registerPanel');
 
-    // FIREBASE AUTH STATE
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        loginRegisterCard.style.display = "none";
-        mainContent.style.display = "block";
-        welcome.textContent = "Welcome, " + user.email;
-      } else {
-        loginRegisterCard.style.display = "block";
-        mainContent.style.display = "none";
-      }
-      // Show body now that Firebase finished check
-      document.body.style.visibility = "visible";
-    });
+  tabLogin.addEventListener('click', () => {
+    tabLogin.classList.add('active');
+    tabRegister.classList.remove('active');
+    loginPanel.classList.remove('hidden');
+    registerPanel.classList.add('hidden');
+  });
 
-    // ACCOUNT MODAL
-    document.getElementById('accountBtn').addEventListener('click', () => { modal.style.display = "flex"; });
-    document.getElementById('logoutBtn').addEventListener('click', async () => { await signOut(auth); });
-    document.getElementById('updateBtn').addEventListener('click', async () => {
-      const user = auth.currentUser;
-      const newPass = document.getElementById('newPass').value.trim();
-      if (!newPass) { status.textContent = "Enter a new password."; return; }
-      try { await updatePassword(user, newPass); status.textContent = "Password updated!"; document.getElementById('newPass').value=""; }
-      catch(e){ status.textContent=e.message; }
-    });
-    document.getElementById('deleteBtn').addEventListener('click', async () => {
-      const user = auth.currentUser;
-      if (!confirm("Delete your account?")) return;
-      try { await deleteUser(user); } catch(e){ status.textContent=e.message; }
-    });
+  tabRegister.addEventListener('click', () => {
+    tabRegister.classList.add('active');
+    tabLogin.classList.remove('active');
+    registerPanel.classList.remove('hidden');
+    loginPanel.classList.add('hidden');
+  });
 
-  </script>
+  // ================= REGISTER =================
+  document.getElementById("createBtn").addEventListener("click", () => {
+    const email = document.getElementById("regUser").value;
+    const password = document.getElementById("regPass").value;
+    const statusReg = document.getElementById("regStatus");
 
-  <!-- Home.js script -->
-  <script src="js/home.js" defer></script>
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => { statusReg.textContent = "Account created!"; })
+      .catch(error => { statusReg.textContent = error.message; });
+  });
 
+  // ================= LOGIN =================
+  document.getElementById("loginBtn").addEventListener("click", () => {
+    const email = document.getElementById("loginUser").value;
+    const password = document.getElementById("loginPass").value;
+    const statusLogin = document.getElementById("loginStatus");
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => { /* Firebase state change will handle redirect */ })
+      .catch(error => { statusLogin.textContent = error.message; });
+  });
+
+  // ================= AUTO REDIRECT & SHOW CONTENT =================
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // Hide login card, show main content
+      loginCard.style.display = "none";
+      mainContent.style.display = "flex";
+      bodyLoaded();
+      welcome.textContent = "Welcome, " + user.email;
+    } else {
+      // Show login card, hide main content
+      loginCard.style.display = "block";
+      mainContent.style.display = "none";
+      bodyLoaded();
+    }
+  });
+
+  // ================= ACCOUNT MODAL =================
+  document.getElementById('accountBtn').addEventListener('click', () => { modal.style.display = "flex"; });
+  modal.addEventListener('click', (e) => { if(e.target===modal) modal.style.display='none'; });
+
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    await signOut(auth);
+  });
+
+  document.getElementById('updateBtn').addEventListener('click', async () => {
+    const user = auth.currentUser;
+    const newPass = document.getElementById('newPass').value.trim();
+    if (!newPass) { status.textContent = "Enter a new password."; return; }
+    try { await updatePassword(user, newPass); status.textContent="Password updated successfully!"; document.getElementById('newPass').value=""; }
+    catch(error){ status.textContent = error.message; }
+  });
+
+  document.getElementById('deleteBtn').addEventListener('click', async () => {
+    const user = auth.currentUser;
+    if(!confirm("Are you sure you want to delete your account?")) return;
+    try { await deleteUser(user); alert("Account deleted."); } 
+    catch(error){ status.textContent = error.message; }
+  });
+
+  function bodyLoaded() { document.body.classList.add('loaded'); }
+</script>
 </body>
 </html>
