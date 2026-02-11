@@ -88,15 +88,19 @@ window.addEventListener('click', e=>{
 });
 
 // Auth state
-onAuthStateChanged(auth, user => {
-  if(user){
-    const firstName = user.displayName ? user.displayName.split(" ")[0] : "";
-    welcome.textContent = firstName ? `Welcome, ${firstName}` : `Welcome, ${user.email}`;
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // Use displayName if it exists
+    let firstName = "";
+    if (user.displayName) {
+      firstName = user.displayName.split(" ")[0];
+    }
+
+    welcome.textContent = firstName ? `Welcome, ${firstName}` : "Welcome!";
   } else {
     welcome.textContent = "Welcome!";
   }
 });
-
 // Logout
 document.getElementById('logoutBtn').addEventListener('click', async ()=>{
   await signOut(auth);
