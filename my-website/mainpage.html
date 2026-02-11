@@ -21,16 +21,14 @@
 <body>
   <div class="navbar">
     <div class="nav-links">
-      <a href="index.html">Home</a>
       <input type="text" class="search-bar" placeholder="Search..." onfocus="openSearchModal()" />
-      <!-- Add this INSIDE your <body>, e.g., below navbar or wherever you want the account button -->
 <button id="accountBtn" class="contact-btn" style="margin-left:10px;">Account</button>
 
 <!-- Account Modal -->
 <div id="accountModal" class="account-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);align-items:center;justify-content:center;z-index:9999;">
   <div class="account-card" style="background:#111827;color:#fff;padding:25px;border-radius:15px;width:360px;box-shadow:0 10px 30px rgba(0,0,0,.4);">
     <h2 id="welcome"></h2>
-    <b></b>
+    <br></br>
 
     <p>Update Email</p>
     <input type="email" id="newEmail" placeholder="New Email" style="width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #374151;background:#020617;color:#fff;">
