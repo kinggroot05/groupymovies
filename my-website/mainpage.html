@@ -90,15 +90,24 @@ window.addEventListener('click', e=>{
 });
 
 // Auth state
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
   if (user) {
-    // Use displayName if it exists
+
+    // 🔥 Force refresh user data
+    await user.reload();
+
+    const updatedUser = auth.currentUser;
+
     let firstName = "";
-    if (user.displayName) {
-      firstName = user.displayName.split(" ")[0];
+
+    if (updatedUser.displayName) {
+      firstName = updatedUser.displayName.split(" ")[0];
     }
 
-    welcome.textContent = firstName ? `Welcome, ${firstName}` : "Welcome!";
+    welcome.textContent = firstName 
+      ? `Welcome, ${firstName}` 
+      : `Welcome, ${updatedUser.email}`;
+
   } else {
     welcome.textContent = "Welcome!";
   }
