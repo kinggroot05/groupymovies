@@ -160,12 +160,11 @@ document.getElementById("registerBtn").addEventListener("click", async () => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-    // 🔥 IMPORTANT: Use updateProfile from import (NOT user.updateProfile)
     await updateProfile(userCredential.user, {
       displayName: `${firstName} ${lastName}`
     });
 
-    // 🔥 Force refresh before redirect
+    // Force refresh before redirect
     await userCredential.user.reload();
 
     status.textContent = `Account created! Welcome, ${firstName}`;
@@ -199,6 +198,7 @@ document.getElementById("registerBtn").addEventListener("click", async () => {
 
 </body>
 </html>
+
 
 
 
