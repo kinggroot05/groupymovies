@@ -241,7 +241,7 @@ document.getElementById("loginBtn").addEventListener("click", async ()=>{
     await signInWithEmailAndPassword(auth,email,password);
     window.location.href="mainpage.html";
   }catch(e){
-    status.textContent="MALI PASSWORD/EMAIL MO KUPAL!";
+    status.textContent="WAG KANG TANGA, RETYPE MO";
   }
 });
 
@@ -277,6 +277,7 @@ onAuthStateChanged(auth,user=>{
 
 </body>
 </html>
+
 
 
 
