@@ -259,7 +259,7 @@ document.getElementById("forgotBtn").addEventListener("click", async ()=>{
 
   try{
     await sendPasswordResetEmail(auth,email);
-    status.textContent="Reset link sent! Check your Gmail inbox.";
+    status.textContent="Reset link sent! Check your Email inbox.";
   }catch(e){
     status.textContent=e.message;
   }
@@ -277,4 +277,5 @@ onAuthStateChanged(auth,user=>{
 
 </body>
 </html>
+
 
