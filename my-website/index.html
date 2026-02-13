@@ -241,7 +241,7 @@ document.getElementById("loginBtn").addEventListener("click", async ()=>{
     await signInWithEmailAndPassword(auth,email,password);
     window.location.href="mainpage.html";
   }catch(e){
-    status.textContent="Invalid email or password.";
+    status.textContent="mali password mo kupal!";
   }
 });
 
@@ -277,5 +277,6 @@ onAuthStateChanged(auth,user=>{
 
 </body>
 </html>
+
 
 
