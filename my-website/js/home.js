@@ -142,43 +142,8 @@ popup.addEventListener("click", (e) => {
     popup.classList.remove("active");
   }
 });
-
-/* FOOTER POPUPS */
-
-const contactBtn = document.getElementById("contactBtn");
-const aboutBtn = document.getElementById("aboutBtn");
-
-const contactPopup = document.getElementById("contactPopup");
-const aboutPopup = document.getElementById("aboutPopup");
-
-const closePopup = document.getElementById("closePopup");
-const closeAbout = document.getElementById("closeAbout");
-
-/* OPEN */
-contactBtn.addEventListener("click", () => {
-contactPopup.style.display = "flex";
-});
-
-aboutBtn.addEventListener("click", () => {
-aboutPopup.style.display = "flex";
-});
-
-/* CLOSE */
-closePopup.addEventListener("click", () => {
-contactPopup.style.display = "none";
-});
-
-closeAbout.addEventListener("click", () => {
-aboutPopup.style.display = "none";
-});
-
-/* CLICK OUTSIDE CLOSE */
-window.addEventListener("click", (e) => {
-if (e.target === contactPopup) contactPopup.style.display = "none";
-if (e.target === aboutPopup) aboutPopup.style.display = "none";
-});
-
     init();
+
 
 
 
