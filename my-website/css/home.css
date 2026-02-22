@@ -390,6 +390,23 @@ background: rgba(0,0,0,0.7);
   float: right;
 }
 
+/*ENDING */
+
+.genre-btn {
+  margin: 5px;
+  padding: 8px 12px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.genre-btn:hover {
+  background-color: #2563eb;
+}
+
+
 
 
 
