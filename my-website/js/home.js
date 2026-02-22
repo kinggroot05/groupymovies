@@ -120,8 +120,36 @@ const API_KEY = 'b3f1d49dab58ab74415a42a1a9f4dbef';
       displayList(anime, 'anime-list');
     }
 
+// This is newly added one
 
 
+
+
+const genres = [
+  "Action", "Comedy", "Drama", "Horror", "Romance", "Sci-Fi", "Animation", "Thriller"
+];
+
+const genreList = document.getElementById('genre-list');
+
+// Create genre buttons
+genres.forEach(genre => {
+  const btn = document.createElement('button');
+  btn.textContent = genre;
+  btn.className = 'genre-btn';
+  btn.addEventListener('click', () => {
+    filterMoviesByGenre(genre);
+  });
+  genreList.appendChild(btn);
+});
+
+// Example filter function
+function filterMoviesByGenre(selectedGenre) {
+  // Assuming you have a movies array fetched from API
+  const filtered = movies.filter(movie => movie.genre.includes(selectedGenre));
+  displayMovies(filtered); // function to display movies in your existing container
+}
+
+// This is newly added one
 
 
 const contactBtn = document.getElementById("contactBtn");
@@ -143,6 +171,7 @@ popup.addEventListener("click", (e) => {
   }
 });
     init();
+
 
 
 
