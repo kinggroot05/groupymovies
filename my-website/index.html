@@ -1,104 +1,174 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login / Register</title>
+<title>Movie Login / Register</title>
 
 <style>
 :root{
-  --bg:#0f172a;
-  --card:#111827;
-  --accent:#22c55e;
-  --accent2:#60a5fa;
-  --text:#e5e7eb;
+  --text:#f5f5f5;
   --muted:#9ca3af;
+  --accent:linear-gradient(90deg,#00f5ff,#00c3ff);
+  --accent-glow:rgba(0,245,255,0.45);
+  --card-bg:rgba(15,15,15,0.95);
 }
 
-*{box-sizing:border-box;font-family:system-ui,Segoe UI,Arial;}
+/* RESET */
+*{box-sizing:border-box;font-family:Poppins,sans-serif;margin:0;padding:0;}
 
+/* BODY */
 body{
-  margin:0;
-  background:linear-gradient(135deg,#0b1024,#111827);
+  background:#000;
   color:var(--text);
-  min-height:100vh;
+  height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
+  overflow:hidden;
 }
 
+/* ANIMATED BACKGROUND */
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background:linear-gradient(120deg,#000,#0a0a0a,#111,#000);
+  background-size:300% 300%;
+  animation:moveBG 18s ease infinite;
+}
+.bg.blur{
+  filter:blur(14px) brightness(.6);
+  transform:scale(1.05);
+}
+@keyframes moveBG{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* CARD */
 .card{
-  width:360px;
-  background:var(--card);
+  width:95%;
+  max-width:380px;
+  background:var(--card-bg);
   padding:22px;
-  border-radius:16px;
-  box-shadow:0 10px 35px rgba(0,0,0,.4);
+  border-radius:20px;
+  box-shadow:0 0 40px rgba(0,0,0,.6),0 0 25px rgba(0,245,255,.08);
 }
 
-h2{margin:0 0 10px;}
+/* HEADER */
+h2{margin:0 0 10px;font-size:22px;}
 
-label{display:block;margin-top:12px;font-size:.9rem;}
+/* MOVIE LINE */
+.movie-line{
+  position:relative;
+  height:10px;
+  margin:16px 0 20px;
+  background:#050505;
+  border-radius:6px;
+  overflow:hidden;
+}
+.movie-line::before,
+.movie-line::after{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:5px;
+  background:repeating-linear-gradient(to right,transparent 0 10px,rgba(255,255,255,.18) 10px 14px);
+}
+.movie-line::before{top:1px;}
+.movie-line::after{bottom:1px;}
+.movie-line span{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,transparent 35%,rgba(0,245,255,.45),transparent 65%);
+  animation:filmScan 3.5s linear infinite;
+}
+@keyframes filmScan{
+  from{transform:translateX(-100%)}
+  to{transform:translateX(100%)}
+}
 
+/* LABELS & INPUTS */
+label{display:block;margin-top:12px;font-size:.9rem;color:var(--muted);}
 input{
   width:100%;
-  padding:10px;
-  border-radius:10px;
-  border:1px solid #374151;
-  background:#020617;
-  color:var(--text);
+  padding:12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.06);
+  background:#080808;
+  color:#fff;
   margin-top:6px;
+  font-size:16px;
+}
+input:focus{
+  outline:none;
+  border-color:var(--accent-glow);
+  box-shadow:0 0 12px var(--accent-glow);
 }
 
+/* BUTTONS */
 button{
   width:100%;
-  padding:10px;
+  padding:14px;
   border:none;
-  border-radius:12px;
+  border-radius:16px;
+  font-size:16px;
+  font-weight:600;
   color:white;
   cursor:pointer;
-  margin-top:14px;
+  margin-top:16px;
+  position:relative;
+  overflow:hidden;
+  background:var(--accent);
+  transition:transform .08s ease, filter .08s ease;
 }
+button:active{
+  transform:scale(.96);
+  filter:brightness(.85);
+}
+.secondary{background:#60a5fa;}
 
-.primary{background:var(--accent);}
-.secondary{background:var(--accent2);}
-
-.tabs{display:flex;gap:6px;margin-bottom:12px;}
-
+/* TABS */
+.tabs{display:flex;gap:8px;margin-bottom:14px;}
 .tab{
   flex:1;
   text-align:center;
-  padding:8px;
-  border-radius:10px;
-  background:#020617;
+  padding:12px;
+  border-radius:14px;
+  background:#111;
   cursor:pointer;
+  font-size:14px;
+}
+.tab.active{
+  background:var(--accent);
+  color:#fff;
+  box-shadow:0 0 18px var(--accent-glow);
 }
 
-.active{background:#60a5fa;}
-.hidden{display:none;}
+/* STATUS */
+.status{margin-top:10px;min-height:18px;font-weight:600;color:var(--muted);}
 
-.status{
-  margin-top:10px;
-  font-weight:600;
-  color:var(--muted);
-  min-height:18px;
-}
-
-/* Forgot password link */
+/* FORGOT PASSWORD */
 .forgot{
   background:none;
   border:none;
-  color:#60a5fa;
+  color:var(--accent);
   margin-top:8px;
   cursor:pointer;
   font-size:13px;
 }
-.forgot:hover{ text-decoration:underline; }
-</style>
+.forgot:hover{text-decoration:underline;}
 
+/* HIDDEN */
+.hidden{display:none;}
+</style>
 </head>
 
 <body>
+
+<div class="bg" id="bg"></div>
 
 <div class="card">
 
@@ -108,64 +178,51 @@ button{
   </div>
 
   <!-- LOGIN PANEL -->
-
   <div id="loginPanel">
-    <h2>Login</h2>
+    <h2>Welcome Back</h2>
+    <div class="movie-line"><span></span></div>
 
-<label>Email</label>
-<input type="email" id="loginEmail" required>
+    <label>Email</label>
+    <input type="email" id="loginEmail" required>
 
-<label>Password</label>
-<input type="password" id="loginPassword" required>
+    <label>Password</label>
+    <input type="password" id="loginPassword" required>
 
-<button class="primary" id="loginBtn">Login</button>
+    <button id="loginBtn">Login</button>
+    <button id="forgotBtn" class="forgot">Forgot Password?</button>
 
-<button id="forgotBtn" class="forgot">Forgot Password?</button>
-
-<div id="loginStatus" class="status"></div>
-
-
+    <div id="loginStatus" class="status"></div>
   </div>
 
   <!-- REGISTER PANEL -->
-
   <div id="registerPanel" class="hidden">
     <h2>Create Account</h2>
+    <div class="movie-line"><span></span></div>
 
-<label>First Name</label>
-<input type="text" id="regFirstName" placeholder="First Name">
+    <label>First Name</label>
+    <input type="text" id="regFirstName">
 
-<label>Last Name</label>
-<input type="text" id="regLastName" placeholder="Last Name">
+    <label>Last Name</label>
+    <input type="text" id="regLastName">
 
-<label>Email</label>
-<input type="email" id="regEmail">
+    <label>Email</label>
+    <input type="email" id="regEmail">
 
-<label>Password</label>
-<input type="password" id="regPassword">
+    <label>Password</label>
+    <input type="password" id="regPassword">
 
-<button class="secondary" id="registerBtn">Register</button>
-<div id="regStatus" class="status"></div>
-
-
+    <button class="secondary" id="registerBtn">Register</button>
+    <div id="regStatus" class="status"></div>
   </div>
 
 </div>
 
-<!-- FIREBASE -->
-
 <script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { 
-  getAuth, 
-  createUserWithEmailAndPassword, 
-  signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-  onAuthStateChanged,
-  updateProfile
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  sendPasswordResetEmail, onAuthStateChanged, updateProfile
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
 
 const firebaseConfig = {
   apiKey: "AIzaSyCwhZf8p7oL-o5A25IABMr1w9FYSoUTPZg",
@@ -179,107 +236,54 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-/* TAB SWITCHING */
+/* TABS */
 const tabLogin = document.getElementById('tabLogin');
 const tabRegister = document.getElementById('tabRegister');
 const loginPanel = document.getElementById('loginPanel');
 const registerPanel = document.getElementById('registerPanel');
 
-tabLogin.onclick = ()=>{
-  tabLogin.classList.add('active');
-  tabRegister.classList.remove('active');
-  loginPanel.classList.remove('hidden');
-  registerPanel.classList.add('hidden');
-};
-
-tabRegister.onclick = ()=>{
-  tabRegister.classList.add('active');
-  tabLogin.classList.remove('active');
-  registerPanel.classList.remove('hidden');
-  loginPanel.classList.add('hidden');
-};
-
+tabLogin.onclick=()=>{tabLogin.classList.add('active');tabRegister.classList.remove('active');loginPanel.classList.remove('hidden');registerPanel.classList.add('hidden');}
+tabRegister.onclick=()=>{tabRegister.classList.add('active');tabLogin.classList.remove('active');registerPanel.classList.remove('hidden');loginPanel.classList.add('hidden');}
 
 /* REGISTER */
-document.getElementById("registerBtn").addEventListener("click", async () => {
-
+document.getElementById("registerBtn").addEventListener("click", async ()=>{
   const email = document.getElementById("regEmail").value;
   const password = document.getElementById("regPassword").value;
   const firstName = document.getElementById("regFirstName").value.trim();
   const lastName = document.getElementById("regLastName").value.trim();
   const status = document.getElementById("regStatus");
 
-  if(!firstName || !lastName){
-    status.textContent="Please enter your full name.";
-    return;
-  }
+  if(!firstName || !lastName){status.textContent="Please enter your full name."; return;}
 
   try{
     const userCredential = await createUserWithEmailAndPassword(auth,email,password);
-
-    await updateProfile(userCredential.user,{
-      displayName:`${firstName} ${lastName}`
-    });
-
+    await updateProfile(userCredential.user,{displayName:`${firstName} ${lastName}`});
     status.textContent=`Account created! Welcome ${firstName}`;
     setTimeout(()=> window.location.href="mainpage.html",1000);
-
-  }catch(error){
-    status.textContent=error.message;
-  }
+  }catch(e){status.textContent=e.message;}
 });
-
 
 /* LOGIN */
 document.getElementById("loginBtn").addEventListener("click", async ()=>{
-
   const email=document.getElementById("loginEmail").value;
   const password=document.getElementById("loginPassword").value;
   const status=document.getElementById("loginStatus");
 
-  try{
-    await signInWithEmailAndPassword(auth,email,password);
-    window.location.href="mainpage.html";
-  }catch(e){
-    status.textContent="WAG KANG TANGA, RETYPE MO";
-  }
+  try{await signInWithEmailAndPassword(auth,email,password); window.location.href="mainpage.html";}
+  catch(e){status.textContent="Invalid login, try again.";}
 });
 
-
-/* FORGOT PASSWORD */
+/* PASSWORD RESET */
 document.getElementById("forgotBtn").addEventListener("click", async ()=>{
-
   const email=document.getElementById("loginEmail").value;
   const status=document.getElementById("loginStatus");
-
-  if(!email){
-    status.textContent="Enter your email first to reset password.";
-    return;
-  }
-
-  try{
-    await sendPasswordResetEmail(auth,email);
-    status.textContent="Reset link sent! Check your Email inbox.";
-  }catch(e){
-    status.textContent=e.message;
-  }
+  if(!email){status.textContent="Enter your email first to reset password.";return;}
+  try{await sendPasswordResetEmail(auth,email);status.textContent="Reset link sent! Check your email.";}
+  catch(e){status.textContent=e.message;}
 });
 
-
-/* AUTO REDIRECT IF ALREADY LOGGED IN */
-onAuthStateChanged(auth,user=>{
-  if(user){
-    window.location.href="mainpage.html";
-  }
-});
-
+/* AUTO REDIRECT */
+onAuthStateChanged(auth,user=>{if(user) window.location.href="mainpage.html";});
 </script>
-
 </body>
 </html>
-
-
-
-
-
-
