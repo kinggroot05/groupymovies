@@ -4,7 +4,7 @@
 
     .navbar {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 10px; background: #222;
+      padding: 10px; background: #0f0f1f;
     }
 
     .navbar img { height: 40px; }
@@ -68,7 +68,7 @@ background: rgba(0,0,0,0.7);
     }
 
     .modal-content {
-      background: #222;
+      background: #1a1333;
       padding: 20px;
       width: 100%;
       max-width: 800px;
@@ -245,7 +245,7 @@ background: rgba(0,0,0,0.7);
 /* MOBILE DISPLAY END */
 
 .footer {
-  background: #222;
+  background: #0f0f1f;
   color: #ccc;
   padding: 20px;
   text-align: center;
@@ -390,6 +390,7 @@ background: rgba(0,0,0,0.7);
   cursor: pointer;
   float: right;
 }
+
 
 
 
