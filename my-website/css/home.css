@@ -1,5 +1,6 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Arial, sans-serif; background: #111; color: #fff; }
+    body { font-family: Arial, sans-serif; background: linear-gradient(to bottom, #000000, #1e1b4b);
+  color: #ffffff; }
 
     .navbar {
       display: flex; justify-content: space-between; align-items: center;
@@ -389,6 +390,7 @@ background: rgba(0,0,0,0.7);
   cursor: pointer;
   float: right;
 }
+
 
 
 
