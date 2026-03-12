@@ -1,177 +1,66 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Movies For You</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Free Movies For You </title>
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="preload" href="css/home.css" as="style">
+  <link rel="preload" href="js/home.js" as="script">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script defer src="js/home.js"></script>
 
-<style>
-/* ===== RESET ===== */
-* {margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif;}
-body {background: linear-gradient(to bottom,#000,#1e1b4b); color:#fff; overflow-x:hidden;}
-a {text-decoration:none;}
-
-/* ===== NAVBAR ===== */
-.navbar {
-  display:flex; align-items:center; justify-content:flex-start; gap:10px;
-  padding:12px 20px; background:#0f0f1f;
-}
-.search-bar {flex:1; padding:8px 12px; border-radius:8px; border:none; background:#1a1a2e; color:#fff;}
-.contact-btn {padding:8px 14px; border-radius:8px; background:#3b82f6; color:#fff; border:none; cursor:pointer;}
-
-/* ===== BANNER ===== */
-.banner {height:50vh; background-size:cover; display:flex; align-items:flex-end; padding:20px; background:#1a1a2e;}
-.banner h1 {background:rgba(0,0,0,0.6); padding:10px 15px; border-radius:8px;}
-
-/* ===== ROW LISTS ===== */
-.row {margin:20px;}
-.row h2 {margin-bottom:10px; color:#fff;}
-.list {display:flex; overflow-x:auto; gap:10px; padding-bottom:5px;}
-.list img {width:150px; border-radius:8px; cursor:pointer; transition: transform 0.3s ease, filter 0.3s ease;}
-.list img:hover {transform:scale(1.05); filter: brightness(1.2); z-index:2;}
-
-/* ===== MODALS ===== */
-.modal, .search-modal, .account-modal, .contact-popup {display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); justify-content:center; align-items:center; z-index:999;}
-.modal-content, .account-card, .popup-box {background:#1f1f2f; padding:20px; border-radius:12px; width:90%; max-width:800px; max-height:90vh; overflow-y:auto; text-align:center;}
-.modal-body {display:flex; gap:15px; align-items:flex-start;}
-.modal-body img {width:30%; border-radius:8px;}
-.modal-text {flex:1; color:#fff;}
-.stars {color:gold; margin-bottom:8px;}
-.close, .close-btn {color:red; font-size:24px; cursor:pointer; float:right;}
-
-/* SERVER SELECTOR */
-.server-selector {margin-top:12px; color:#fff;}
-.server-selector select {margin-left:10px; padding:6px; border-radius:6px; background:#111827; color:#fff; border:none;}
-
-/* SEARCH MODAL */
-.search-modal {flex-direction:column; justify-content:flex-start; padding-top:60px;}
-.search-modal input {width:90%; max-width:400px; padding:10px; border-radius:8px; border:none; margin-bottom:20px; background:#1f1f2f; color:#fff;}
-.results {display:flex; flex-wrap:wrap; gap:10px; justify-content:center;}
-.results img {width:120px; border-radius:8px; cursor:pointer;}
-
-/* ===== FOOTER ===== */
-.footer {background:#0f0f1f; color:#ccc; padding:20px; text-align:center; margin-top:40px;}
-.footer-content {display:flex; flex-direction:column; gap:10px;}
-.footer-links .contact-btn {padding:6px 12px; border-radius:6px; background:#3b82f6; color:#fff; border:none; cursor:pointer;}
-
-/* ===== CONTACT POPUP ===== */
-.popup-box {display:flex; flex-direction:column; gap:10px; align-items:center;}
-.popup-box a {font-size:32px; margin:0 10px; transition: transform 0.2s;}
-.popup-box a:hover {transform:scale(1.2);}
-
-/* ===== ACCOUNT CARD BUTTONS ===== */
-.account-card input {width:100%; padding:10px; margin:6px 0 10px; border-radius:8px; border:1px solid #374151; background:#1f1f2f; color:#fff;}
-.account-card button {width:100%; padding:10px; margin-top:5px; border:none; border-radius:8px; cursor:pointer;}
-.update {background:#3b82f6; color:#fff;}
-.delete {background:#ef4444; color:#fff;}
-.logout {background:#22c55e; color:#fff;}
-.status {margin-top:10px; color:#9ca3af; font-weight:bold;}
-</style>
+<script type="text/javascript" data-cfasync="false">
+/*<![CDATA[/* */
+(function(){var g=window,m="c21091ff1831bb6fdb852783a76519c6",w=[["siteId",180+242+54-216-651+5276178],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],v=["d3d3LmNkbjRhZHMuY29tL1BndlRady9ML2xsb3phZC5taW4uanM=","ZDNnNW92Zm5nanc5YncuY2xvdWRmcm9udC5uZXQvaWZsb2F0aW5nLmpz"],i=-1,p,s,a=function(){clearTimeout(s);i++;if(v[i]&&!(1796741322000<(new Date).getTime()&&1<i)){p=g.document.createElement("script");p.type="text/javascript";p.async=!0;var f=g.document.getElementsByTagName("script")[0];p.src="https://"+atob(v[i]);p.crossOrigin="anonymous";p.onerror=a;p.onload=function(){clearTimeout(s);g[m.slice(0,16)+m.slice(0,16)]||a()};s=setTimeout(a,5E3);f.parentNode.insertBefore(p,f)}};if(!g[m]){try{Object.freeze(g[m]=w)}catch(e){}a()}})();
+/*]]>/* */
+</script>
 
 </head>
+
 <body>
-
-<!-- NAVBAR -->
-<div class="navbar">
-  <input type="text" class="search-bar" placeholder="Search..." onfocus="openSearchModal()">
-  <button id="accountBtn" class="contact-btn">Account</button>
-</div>
-
-<!-- ACCOUNT MODAL -->
-<div id="accountModal" class="account-modal">
-  <div class="account-card">
+  <div class="navbar">
+    <div class="nav-links">
+      <input type="text" class="search-bar" placeholder="Search..." onfocus="openSearchModal()" />
+      <button id="accountBtn" class="contact-btn" style="margin-left: 10px;">Account</button>
+      
+<!-- Account Modal -->
+<div id="accountModal" class="account-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);align-items:center;justify-content:center;z-index:9999;">
+  <div class="account-card" style="background:#111827;color:#fff;padding:25px;border-radius:15px;width:360px;box-shadow:0 10px 30px rgba(0,0,0,.4);">
     <h2 id="welcome"></h2>
+    <br></br>
+
     <p>Update Email</p>
-    <input type="email" id="newEmail" placeholder="New Email">
-    <button id="updateEmailBtn" class="update">Update Email</button>
+    <input type="email" id="newEmail" placeholder="New Email" style="width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #374151;background:#020617;color:#fff;">
+    <button class="update" id="updateEmailBtn" style="width:100%;padding:10px;margin-top:10px;border:none;border-radius:10px;cursor:pointer;background:#3b82f6;color:#fff;">Update Email</button>
+    <br></br>
     <p>Update Password</p>
-    <input type="password" id="newPass" placeholder="New Password">
-    <button id="updatePassBtn" class="update">Update Password</button>
-    <button id="deleteBtn" class="delete">Delete Account</button>
-    <hr style="margin:10px 0; border-color:#374151;">
-    <button id="logoutBtn" class="logout">Logout</button>
-    <div id="status" class="status"></div>
+    <input type="password" id="newPass" placeholder="New Password" style="width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #374151;background:#020617;color:#fff;">
+    <button class="update" id="updatePassBtn" style="width:100%;padding:10px;margin-top:10px;border:none;border-radius:10px;cursor:pointer;background:#3b82f6;color:#fff;">Update Password</button>
+    <button class="delete" id="deleteBtn" style="width:100%;padding:10px;margin-top:10px;border:none;border-radius:10px;cursor:pointer;background:#ef4444;color:#fff;">Delete Account</button>
+
+    <hr style="margin:10px 0;border-color:#374151;">
+
+    <button class="logout" id="logoutBtn" style="width:100%;padding:10px;margin-top:10px;border:none;border-radius:10px;cursor:pointer;background:#22c55e;color:#fff;">Logout</button>
+
+    <div class="status" id="status" style="margin-top:10px;font-weight:bold;color:#9ca3af;"></div>
   </div>
 </div>
 
-<!-- BANNER -->
-<div class="banner" id="banner">
-  <h1 id="banner-title"></h1>
-</div>
-
-<!-- MOVIE ROWS -->
-<div class="row">
-  <h2>Trending Movies</h2>
-  <div class="list" id="movies-list"></div>
-</div>
-<div class="row">
-  <h2>Trending TV Shows</h2>
-  <div class="list" id="tvshows-list"></div>
-</div>
-<div class="row">
-  <h2>Trending Anime</h2>
-  <div class="list" id="anime-list"></div>
-</div>
-
-<!-- MODAL -->
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <div class="modal-body">
-      <img id="modal-image" src="" alt="">
-      <div class="modal-text">
-        <h2 id="modal-title"></h2>
-        <div class="stars" id="modal-rating"></div>
-        <p id="modal-description"></p>
-      </div>
-    </div>
-    <div class="server-selector">
-      <label for="server">Change Server:</label>
-      <select id="server" onchange="changeServer()">
-        <option value="vidsrc.cc">Daphne</option>
-        <option value="vidsrc.me">Babelyn</option>
-        <option value="player.videasy.net">Monica</option>
-      </select>
-    </div>
-    <iframe id="modal-video" width="100%" height="315" frameborder="0" allowfullscreen style="margin-top:10px;border-radius:8px;"></iframe>
-  </div>
-</div>
-
-<!-- SEARCH MODAL -->
-<div class="search-modal" id="search-modal">
-  <span class="close" onclick="closeSearchModal()">&times;</span>
-  <input type="text" id="search-input" placeholder="Search for a movie or show..." oninput="searchTMDB()">
-  <div class="results" id="search-results"></div>
-</div>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="footer-content">
-    <p>&copy; 2026 Group 5's Website. All rights reserved.</p>
-    <div class="footer-links">
-      <button id="contactBtn" class="contact-btn">Contact Us</button>
-    </div>
-  </div>
-</footer>
-
-<!-- CONTACT POPUP -->
-<div id="contactPopup" class="contact-popup">
-  <div class="popup-box">
-    <button id="closePopup" class="close-btn">✖</button>
-    <div style="display:flex;gap:15px;">
-      <a href="https://facebook.com" target="_blank" title="Facebook">📘</a>
-      <a href="https://instagram.com" target="_blank" title="Instagram">📸</a>
-      <a href="https://discord.com" target="_blank" title="Discord">🎮</a>
-    </div>
-  </div>
-</div>
-
-<!-- JS -->
 <script type="module">
-// ===== FIREBASE CONFIG =====
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateEmail, updatePassword, deleteUser, EmailAuthProvider, reauthenticateWithCredential } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { 
+  getAuth, 
+  onAuthStateChanged, 
+  signOut, 
+  updatePassword, 
+  updateEmail, 
+  deleteUser,
+  EmailAuthProvider, 
+  reauthenticateWithCredential 
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCwhZf8p7oL-o5A25IABMr1w9FYSoUTPZg",
   authDomain: "groupymovie.firebaseapp.com",
@@ -180,134 +69,206 @@ const firebaseConfig = {
   messagingSenderId: "391687787452",
   appId: "1:391687787452:web:025fe4654afeb0f6eed1b9"
 };
+
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// ===== DOM ELEMENTS =====
-const accountModal = document.getElementById('accountModal');
+// DOM elements
+const modal = document.getElementById('accountModal');
 const welcome = document.getElementById('welcome');
 const status = document.getElementById('status');
 
-// ===== ACCOUNT MODAL =====
-document.getElementById('accountBtn').addEventListener('click', ()=>accountModal.style.display='flex');
-window.addEventListener('click', e=>{if(e.target==accountModal) accountModal.style.display='none';});
-
-// ===== AUTH STATE =====
-onAuthStateChanged(auth, user=>{
-  if(user){
-    const firstName = user.displayName? user.displayName.split(" ")[0]:null;
-    welcome.textContent = firstName ? `Welcome, ${firstName}` : `Welcome, ${user.email}`;
-  } else { window.location.replace("index.html"); }
+// Show modal
+document.getElementById('accountBtn').addEventListener('click', ()=>{
+  modal.style.display = 'flex';
 });
 
-// ===== LOGOUT =====
+// Hide modal when clicking outside
+window.addEventListener('click', e=>{
+  if(e.target == modal) modal.style.display='none';
+});
+
+// Auth state
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    const firstName = user.displayName 
+      ? user.displayName.split(" ")[0] 
+      : null;
+
+    welcome.textContent = firstName
+      ? `Welcome, ${firstName}`
+      : `Welcome, ${user.email}`;
+  } else {
+    window.location.replace("index.html");
+  }
+});
+
+// Logout
 document.getElementById('logoutBtn').addEventListener('click', async ()=>{
   await signOut(auth);
-  accountModal.style.display='none';
+  modal.style.display = 'none';
   window.location.replace("index.html");
 });
 
-// ===== UPDATE PASSWORD =====
-document.getElementById('updatePassBtn').addEventListener('click', async ()=>{
+// Update password
+document.getElementById('updatePassBtn').addEventListener('click', async () => {
   const user = auth.currentUser;
   const newPass = document.getElementById('newPass').value.trim();
   const currentPassword = prompt("Enter your current password to confirm:");
-  if(!newPass || !currentPassword){ alert("New password and current password required."); return;}
-  try{
-    const credential = EmailAuthProvider.credential(user.email,currentPassword);
-    await reauthenticateWithCredential(user,credential);
-    await updatePassword(user,newPass);
-    alert("Password updated successfully!"); document.getElementById('newPass').value='';
-  } catch(e){ alert(e.message);}
+
+  if (!newPass || !currentPassword) {
+    alert("New password and current password required.");
+    return;
+  }
+
+  try {
+    const credential = EmailAuthProvider.credential(user.email, currentPassword);
+
+    // Re-authenticate
+    await reauthenticateWithCredential(user, credential);
+
+    // Update password
+    await updatePassword(user, newPass);
+
+    alert("Password updated successfully!");
+    document.getElementById('newPass').value = '';
+
+  } catch (error) {
+    alert(error.message);
+  }
 });
 
-// ===== UPDATE EMAIL =====
-document.getElementById('updateEmailBtn').addEventListener('click', async ()=>{
+// Update email
+document.getElementById('updateEmailBtn').addEventListener('click', async () => {
   const user = auth.currentUser;
   const newEmail = document.getElementById('newEmail').value.trim();
   const currentPassword = prompt("Enter your current password to confirm:");
-  if(!newEmail || !currentPassword){ alert("Email and current password required."); return;}
-  try{
-    const credential = EmailAuthProvider.credential(user.email,currentPassword);
-    await reauthenticateWithCredential(user,credential);
-    await updateEmail(user,newEmail);
-    alert("Email updated successfully!"); document.getElementById('newEmail').value='';
-  } catch(e){ alert(e.message);}
+
+  if (!newEmail || !currentPassword) {
+    alert("Email and current password required.");
+    return;
+  }
+
+  try {
+    const credential = EmailAuthProvider.credential(user.email, currentPassword);
+
+    // Re-authenticate
+    await reauthenticateWithCredential(user, credential);
+
+    // Update email
+    await updateEmail(user, newEmail);
+
+    alert("Email updated successfully!");
+    document.getElementById('newEmail').value = '';
+
+  } catch (error) {
+    alert(error.message);
+  }
 });
 
-// ===== DELETE ACCOUNT =====
-document.getElementById('deleteBtn').addEventListener('click', async ()=>{
+
+// Delete account
+document.getElementById('deleteBtn').addEventListener('click', async () => {
   const user = auth.currentUser;
   const currentPassword = prompt("Enter your current password to delete your account:");
-  if(!currentPassword) return;
-  if(!confirm("Are you sure you want to delete your account?")) return;
-  try{
-    const credential = EmailAuthProvider.credential(user.email,currentPassword);
-    await reauthenticateWithCredential(user,credential);
+
+  if (!currentPassword) return;
+
+  if (!confirm("Are you sure you want to delete your account?")) return;
+
+  try {
+    const credential = EmailAuthProvider.credential(user.email, currentPassword);
+
+    // Re-authenticate
+    await reauthenticateWithCredential(user, credential);
+
+    // Delete account
     await deleteUser(user);
-    alert("Account deleted successfully."); window.location.replace("index.html");
-  } catch(e){ alert(e.message);}
+
+    alert("Account deleted successfully.");
+    window.location.replace("index.html");
+
+  } catch (error) {
+    alert(error.message);
+  }
 });
-
-// ===== CONTACT POPUP =====
-const contactBtn = document.getElementById("contactBtn");
-const popup = document.getElementById("contactPopup");
-const closeBtn = document.getElementById("closePopup");
-contactBtn.addEventListener("click", ()=>popup.style.display='flex');
-closeBtn.addEventListener("click", ()=>popup.style.display='none');
-popup.addEventListener("click", e=>{if(e.target==popup) popup.style.display='none';});
-
-// ===== MOVIE API =====
-const API_KEY='b3f1d49dab58ab74415a42a1a9f4dbef';
-const BASE_URL='https://api.themoviedb.org/3';
-const IMG_URL='https://image.tmdb.org/t/p/original';
-let currentItem;
-
-async function fetchTrending(type){ const res=await fetch(`${BASE_URL}/trending/${type}/week?api_key=${API_KEY}`); const data=await res.json(); return data.results; }
-async function fetchTrendingAnime(){ let allResults=[]; for(let page=1; page<=3; page++){ const res=await fetch(`${BASE_URL}/trending/tv/week?api_key=${API_KEY}&page=${page}`); const data=await res.json(); const filtered=data.results.filter(item=>item.original_language==='ja' && item.genre_ids.includes(16)); allResults=allResults.concat(filtered);} return allResults; }
-
-function displayBanner(item){ document.getElementById('banner').style.backgroundImage=`url(${IMG_URL}${item.backdrop_path})`; document.getElementById('banner-title').textContent=item.title||item.name;}
-function displayList(items,containerId){ const container=document.getElementById(containerId); container.innerHTML=''; items.forEach(item=>{ const img=document.createElement('img'); img.src=`${IMG_URL}${item.poster_path}`; img.alt=item.title||item.name; img.onclick=()=>showDetails(item); container.appendChild(img);}); }
-
-function showDetails(item){
-  currentItem=item;
-  document.getElementById('modal-title').textContent=item.title||item.name;
-  document.getElementById('modal-description').textContent=item.overview;
-  document.getElementById('modal-image').src=`${IMG_URL}${item.poster_path}`;
-  document.getElementById('modal-rating').innerHTML='★'.repeat(Math.round(item.vote_average/2));
-  changeServer();
-  document.getElementById('modal').style.display='flex';
-}
-
-function changeServer(){
-  const server=document.getElementById('server').value;
-  const type=currentItem.media_type==="movie"? "movie":"tv";
-  let embedURL="";
-  if(server==="vidsrc.cc"){ embedURL=`https://vidsrc.cc/v2/embed/${type}/${currentItem.id}`; }
-  else if(server==="vidsrc.me"){ embedURL=`https://vidsrc.net/embed/${type}/?tmdb=${currentItem.id}`; }
-  else if(server==="player.videasy.net"){ embedURL=`https://player.videasy.net/${type}/${currentItem.id}`; }
-  document.getElementById('modal-video').src=embedURL;
-}
-function closeModal(){ document.getElementById('modal').style.display='none'; document.getElementById('modal-video').src=''; }
-
-function openSearchModal(){ document.getElementById('search-modal').style.display='flex'; document.getElementById('search-input').focus(); }
-function closeSearchModal(){ document.getElementById('search-modal').style.display='none'; document.getElementById('search-results').innerHTML=''; }
-
-async function searchTMDB(){ const query=document.getElementById('search-input').value; if(!query.trim()){document.getElementById('search-results').innerHTML=''; return;}
-const res=await fetch(`${BASE_URL}/search/multi?api_key=${API_KEY}&query=${query}`); const data=await res.json();
-const container=document.getElementById('search-results'); container.innerHTML='';
-data.results.forEach(item=>{ if(!item.poster_path) return; const img=document.createElement('img'); img.src=`${IMG_URL}${item.poster_path}`; img.alt=item.title||item.name; img.onclick=()=>{ closeSearchModal(); showDetails(item); }; container.appendChild(img); });}
-
-async function init(){
-  const movies=await fetchTrending('movie');
-  const tvShows=await fetchTrending('tv');
-  const anime=await fetchTrendingAnime();
-  displayBanner(movies[Math.floor(Math.random()*movies.length)]);
-  displayList(movies,'movies-list');
-  displayList(tvShows,'tvshows-list');
-  displayList(anime,'anime-list');
-}
-init();
 </script>
+    </div>
+  </div>
 
-</html>
+  <div class="banner" id="banner">
+    <h1 id="banner-title"></h1>
+  </div>
+
+  <div class="row">
+    <h2>Trending Movies</h2>
+    <div class="list" id="movies-list"></div>
+  </div>
+
+  <div class="row">
+    <h2>Trending TV Shows</h2>
+    <div class="list" id="tvshows-list"></div>
+  </div>
+
+  <div class="row">
+    <h2>Trending Anime</h2>
+    <div class="list" id="anime-list"></div>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()" style="color: red;">&times;</span>
+      <div class="modal-body">
+  <img id="modal-image" src="" alt="" />
+  <div class="modal-text">
+    <h2 id="modal-title"></h2>
+    <div class="stars" id="modal-rating"></div>
+    <p id="modal-description"></p>
+  </div>
+</div>
+      
+      <div class="server-selector">
+        <label for="server">Change Server:</label>
+        <select id="server" onchange="changeServer()">
+          <option value="vidsrc.cc">Daphne</option>
+          <option value="vidsrc.me">Babelyn</option>
+          <option value="player.videasy.net">Monica</option>
+        </select>
+      </div>
+      <iframe id="modal-video" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <div class="search-modal" id="search-modal">
+    <span class="close" onclick="closeSearchModal()" style="color: red;">&times;</span>
+    <input type="text" id="search-input" placeholder="Search for a movie or show..." oninput="searchTMDB()" />
+    <div class="results" id="search-results"></div>
+  </div>
+
+
+<footer class="footer">
+  <div class="footer-content">
+    <p>&copy; 2026 Group 5's Website. All rights reserved.</p>
+
+    <div class="footer-links">
+      <button id="contactBtn" class="contact-btn">Contact Us</button>
+    </div>
+  </div>
+</footer>
+
+<!-- Contact Popup -->
+<div id="contactPopup" class="contact-popup">
+  <div class="popup-box">
+    <button id="closePopup" class="close-btn">✖</button>
+
+    <a href="https://facebook.com" target="_blank" title="Facebook">📘</a>
+    <a href="https://instagram.com" target="_blank" title="Instagram">📸</a>
+    <a href="https://discord.com" target="_blank" title="Discord">🎮</a>
+  </div>
+</div>
+
+<!-- Link JS file -->
+<script src="js/home.js"></script>
+
+</body>
