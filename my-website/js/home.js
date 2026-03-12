@@ -123,6 +123,7 @@ const API_KEY = 'b3f1d49dab58ab74415a42a1a9f4dbef';
 
 
 
+
 const contactBtn = document.getElementById("contactBtn");
 const popup = document.getElementById("contactPopup");
 const closeBtn = document.getElementById("closePopup");
@@ -142,9 +143,6 @@ popup.addEventListener("click", (e) => {
   }
 });
     init();
-
-
-
 
 
 
